@@ -1,18 +1,36 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    bool m_turnoJugador1;
+    bool m_turnoJugador2;
+    bool m_comienzoturno;
+
+    public Action<String> OnComunicateUI;
+
+
     void Start()
     {
-        
+        bool m_turnoJugador1=true;
+
     }
 
     // Update is called once per frame
     void Update()
     {
         
+
     }
+
+    public void ComunicateUI(String n)
+    {
+        OnComunicateUI?.Invoke(n);
+    }
+
+    
+
 }
