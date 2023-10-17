@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         bool m_turnoJugador1=true;
+        StartCoroutine("CambiodeTurno");
 
     }
 
@@ -31,6 +32,13 @@ public class GameManager : MonoBehaviour
         OnComunicateUI?.Invoke(n);
     }
 
-    
+    IEnumerator CambiodeTurno()
+    {
+        while (true)
+        {
+            ComunicateUI("Hola");
 
+
+        }
+    }
 }
