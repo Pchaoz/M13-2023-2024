@@ -8,5 +8,5 @@ public class AttackInfo : ScriptableObject
     public int damage;
     public int pp;
     public string type;
-    public string effect;
+    public string state;
 }
