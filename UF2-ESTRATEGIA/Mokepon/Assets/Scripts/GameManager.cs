@@ -7,24 +7,34 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     bool m_turnoJugador1;
-    bool m_turnoJugador2;
     bool m_comienzoturno;
 
     public Action<String> OnComunicateUI;
 
-
     void Start()
     {
         bool m_turnoJugador1=true;
+        m_comienzoturno = true;
         StartCoroutine("CambiodeTurno");
 
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
-
+        if (m_comienzoturno == true)
+        {
+            if (m_turnoJugador1 == true)
+            {
+                ComunicateUI("Turno jugador 1");
+                m_turnoJugador1 = false;
+            }
+            else
+            {
+                ComunicateUI("Turno jugador 2");
+                m_turnoJugador1 = true;
+            }
+        }
+        m_comienzoturno = false;
     }
 
     public void ComunicateUI(String n)
@@ -36,9 +46,8 @@ public class GameManager : MonoBehaviour
     {
         while (true)
         {
-            ComunicateUI("Hola");
-
-
+            yield return new WaitForSeconds(5);
+            m_comienzoturno = true;
         }
     }
 }

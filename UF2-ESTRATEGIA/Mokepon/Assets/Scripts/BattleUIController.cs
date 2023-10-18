@@ -8,11 +8,13 @@ public class BattleUIController : MonoBehaviour
 
     [SerializeField]
     TextMeshProUGUI m_battleText;
+    [SerializeField]
+    GameManager m_gameManager;
 
     void Start()
     {
         m_battleText.text = "Comença el combat Pokemon";
-        GetComponent<GameManager>().OnComunicateUI += OnMostrarCambios;
+        m_gameManager.OnComunicateUI += OnMostrarCambios;
     }
 
     // Update is called once per frame
@@ -24,7 +26,6 @@ public class BattleUIController : MonoBehaviour
 
     private void OnMostrarCambios(string n)
     {
-        new WaitForSeconds(5);
         m_battleText.text = n;
     }
 }
