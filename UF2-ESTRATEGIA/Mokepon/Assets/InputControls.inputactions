@@ -1,0 +1,84 @@
+{
+    "name": "InputControls",
+    "maps": [
+        {
+            "name": "OpenWorld",
+            "id": "bb93d29c-f2b4-4c14-addd-6f7eb9b5768e",
+            "actions": [
+                {
+                    "name": "WorldActions",
+                    "type": "Value",
+                    "id": "164de59f-dc33-4291-9f3b-c94099c9c7d6",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "MovimientoMapa",
+                    "id": "39995bbf-5c4d-42d6-8f7c-09bcb07ccbe9",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WorldActions",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "c30632c2-557f-44bf-a515-85d9469ef62e",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Jugador1",
+                    "action": "WorldActions",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "06b43e2b-5589-4998-8c47-00dcc361f037",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Jugador1",
+                    "action": "WorldActions",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "6bfd52d1-8c43-431f-830c-f6df78a921df",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Jugador1",
+                    "action": "WorldActions",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "dc057383-c77b-419d-8c42-3baaf2892973",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Jugador1",
+                    "action": "WorldActions",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Jugador1",
+            "bindingGroup": "Jugador1",
+            "devices": []
+        }
+    ]
+}
