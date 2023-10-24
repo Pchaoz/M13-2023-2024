@@ -45,11 +45,8 @@ public class JugadorController : MonoBehaviour
     {
         if (collision.attachedRigidbody.gameObject.layer == m_DangerLayer)
         {
-            if (!m_corutinaIniciada) {
-            m_corutinaIniciada = true;
             Debug.Log("Inicio corutina");
             StartCoroutine(posiblePokemonHierba());
-            }
         }
     }
 
@@ -57,12 +54,8 @@ public class JugadorController : MonoBehaviour
     {
         if (collision.attachedRigidbody.gameObject.layer == m_DangerLayer)
         {
-            if (m_corutinaIniciada)
-            {
-                m_corutinaIniciada = false;
-                Debug.Log("Parada corutina");
-               StopCoroutine(posiblePokemonHierba());
-            }
+             Debug.Log("Parada corutina");
+             StopAllCoroutines();
         }
     }
 
@@ -73,7 +66,7 @@ public class JugadorController : MonoBehaviour
         while (true) {
             Debug.Log("Puede que te ataque un pokemon");
             int m_random=Random.Range(0, 101);
-            if (m_random > 90)
+            if (m_random > 85)
             {
                 Debug.Log("Te ataca un pokemon");
             }
