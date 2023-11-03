@@ -13,19 +13,35 @@ public class JugadorController : MonoBehaviour
     private InputActionAsset m_InputAsset;
     private InputActionAsset m_Input;
     private InputAction m_MovementAction;
-    private int m_Speed=4;
+    private int m_Speed=100;
     private Rigidbody2D m_Rigidbody;
     private int m_DangerLayer=0;
-    private bool m_corutinaIniciada;
+    private IEnumerator m_pokemonHierba;
 
 
     private void Awake()
     {
-        m_Input = Instantiate(m_InputAsset);
-        m_MovementAction = m_Input.FindActionMap("OpenWorld").FindAction("WorldActions");
-        m_Input.FindActionMap("OpenWorld").Enable();
-        m_Rigidbody=GetComponent<Rigidbody2D>();
-        m_corutinaIniciada = false;
+        if (gameObject.CompareTag("Player1"))
+        {
+            m_Input = Instantiate(m_InputAsset);
+            m_MovementAction = m_Input.FindActionMap("OpenWorld").FindAction("WorldActions");
+            m_Input.FindActionMap("OpenWorld").Enable();
+            m_Rigidbody = GetComponent<Rigidbody2D>();
+            m_pokemonHierba = posiblePokemonHierba();
+            m_Input.FindActionMap("OpenWorld").FindAction("WorldActions").started += Moverse;
+            m_Input.FindActionMap("OpenWorld").FindAction("WorldActions").canceled += Pararse;
+        }
+        else
+        {
+            m_Input = Instantiate(m_InputAsset);
+            m_MovementAction = m_Input.FindActionMap("OpenWorld2").FindAction("WorldActions");
+            m_Input.FindActionMap("OpenWorld2").Enable();
+            m_Rigidbody = GetComponent<Rigidbody2D>();
+            m_pokemonHierba = posiblePokemonHierba();
+            m_Input.FindActionMap("OpenWorld2").FindAction("WorldActions").started += Moverse;
+            m_Input.FindActionMap("OpenWorld2").FindAction("WorldActions").canceled += Pararse;
+        }
+       
 
     }
 
@@ -38,15 +54,32 @@ public class JugadorController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        m_Rigidbody.velocity = m_MovementAction.ReadValue<Vector2>() * m_Speed;
+       
+       
+       
     }
+
+    void Moverse(InputAction.CallbackContext actionContext)
+    {
+        if (m_Rigidbody.velocity.x < 4 && m_Rigidbody.velocity.x > -4 && m_Rigidbody.velocity.y < 4 && m_Rigidbody.velocity.y > -4)
+            m_Rigidbody.AddForce(m_MovementAction.ReadValue<Vector2>() * m_Speed);
+
+        Debug.Log(m_Rigidbody.velocity);
+    }
+
+    void Pararse(InputAction.CallbackContext actionContext)
+    {
+           m_Rigidbody.velocity= Vector2.zero;
+
+    }
+
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.attachedRigidbody.gameObject.layer == m_DangerLayer)
         {
-            Debug.Log("Inicio corutina");
-            StartCoroutine(posiblePokemonHierba());
+            //Debug.Log("Inicio corutina");
+            StartCoroutine(m_pokemonHierba);
         }
     }
 
@@ -54,8 +87,8 @@ public class JugadorController : MonoBehaviour
     {
         if (collision.attachedRigidbody.gameObject.layer == m_DangerLayer)
         {
-             Debug.Log("Parada corutina");
-             StopAllCoroutines();
+             //Debug.Log("Parada corutina");
+             StopCoroutine(m_pokemonHierba);
         }
     }
 
@@ -64,11 +97,11 @@ public class JugadorController : MonoBehaviour
     IEnumerator posiblePokemonHierba()
     {
         while (true) {
-            Debug.Log("Puede que te ataque un pokemon");
+            //Debug.Log("Puede que te ataque un pokemon");
             int m_random=Random.Range(0, 101);
             if (m_random > 85)
             {
-                Debug.Log("Te ataca un pokemon");
+                //Debug.Log("Te ataca un pokemon");
             }
             else
             {
