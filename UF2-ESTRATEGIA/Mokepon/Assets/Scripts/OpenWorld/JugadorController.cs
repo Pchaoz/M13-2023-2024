@@ -13,11 +13,79 @@ public class JugadorController : MonoBehaviour
     private InputActionAsset m_InputAsset;
     private InputActionAsset m_Input;
     private InputAction m_MovementAction;
-    private int m_Speed=100;
+    [SerializeField]
+    private int m_Speed=30;
     private Rigidbody2D m_Rigidbody;
     private int m_DangerLayer=0;
+    private int m_EffectorLayer = 0;
     private IEnumerator m_pokemonHierba;
+    private bool m_underEffector;
+    private enum SwitchMachinesStates { NONE, IDLE, WALK, BATTLE };
+    [SerializeField]
+    private SwitchMachinesStates m_CurrentState;
 
+    private void ChangeState(SwitchMachinesStates newState)
+    {
+        if (newState == m_CurrentState)
+            return;
+
+        InitState(newState);
+    }
+
+    private void InitState(SwitchMachinesStates currentState)
+    {
+        m_CurrentState = currentState;
+        switch (m_CurrentState)
+        {
+            case SwitchMachinesStates.IDLE:
+                m_Rigidbody.velocity = Vector2.zero;
+
+                break;
+
+            case SwitchMachinesStates.WALK:
+
+                break;
+            case SwitchMachinesStates.BATTLE:
+                m_Rigidbody.velocity = Vector2.zero;
+
+                break;
+        }
+
+    }
+
+    private void UpdateState()
+    {
+        switch (m_CurrentState)
+        {
+
+            case SwitchMachinesStates.IDLE:
+                if(!m_underEffector)
+                m_Rigidbody.velocity = Vector2.zero;
+                if (m_MovementAction.ReadValue<Vector2>() != new Vector2(0, 0))
+                {
+                    ChangeState(SwitchMachinesStates.WALK);
+                }
+
+                break;
+            case SwitchMachinesStates.WALK:
+                if (m_Rigidbody.velocity.x < 1 && m_Rigidbody.velocity.x > -1 && m_Rigidbody.velocity.y < 1 && m_Rigidbody.velocity.y > -1)
+                {
+                    m_Rigidbody.AddForce(m_MovementAction.ReadValue<Vector2>() * m_Speed);
+                    Debug.Log("Voy a" +m_Rigidbody.velocity);
+                    Debug.Log("Recibo "+m_MovementAction.ReadValue<Vector2>());
+
+                }
+
+                if (m_MovementAction.ReadValue<Vector2>() == new Vector2(0, 0))
+                    ChangeState(SwitchMachinesStates.IDLE);
+                break;
+
+           
+
+        }
+    }
+
+    
 
     private void Awake()
     {
@@ -28,8 +96,8 @@ public class JugadorController : MonoBehaviour
             m_Input.FindActionMap("OpenWorld").Enable();
             m_Rigidbody = GetComponent<Rigidbody2D>();
             m_pokemonHierba = posiblePokemonHierba();
-            m_Input.FindActionMap("OpenWorld").FindAction("WorldActions").started += Moverse;
-            m_Input.FindActionMap("OpenWorld").FindAction("WorldActions").canceled += Pararse;
+            m_Input.FindActionMap("OpenWorld").FindAction("WorldActions");
+
         }
         else
         {
@@ -38,8 +106,7 @@ public class JugadorController : MonoBehaviour
             m_Input.FindActionMap("OpenWorld2").Enable();
             m_Rigidbody = GetComponent<Rigidbody2D>();
             m_pokemonHierba = posiblePokemonHierba();
-            m_Input.FindActionMap("OpenWorld2").FindAction("WorldActions").started += Moverse;
-            m_Input.FindActionMap("OpenWorld2").FindAction("WorldActions").canceled += Pararse;
+            m_Input.FindActionMap("OpenWorld2").FindAction("WorldActions");
         }
        
 
@@ -48,28 +115,16 @@ public class JugadorController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_DangerLayer= LayerMask.NameToLayer("Danger");
+        InitState(SwitchMachinesStates.IDLE);
+        m_DangerLayer = LayerMask.NameToLayer("Danger");
+        m_EffectorLayer = LayerMask.NameToLayer("Effector");
+        m_underEffector = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-       
-       
-       
-    }
-
-    void Moverse(InputAction.CallbackContext actionContext)
-    {
-        if (m_Rigidbody.velocity.x < 4 && m_Rigidbody.velocity.x > -4 && m_Rigidbody.velocity.y < 4 && m_Rigidbody.velocity.y > -4)
-            m_Rigidbody.AddForce(m_MovementAction.ReadValue<Vector2>() * m_Speed);
-
-    }
-
-    void Pararse(InputAction.CallbackContext actionContext)
-    {
-           m_Rigidbody.velocity= Vector2.zero;
-
+        UpdateState();
     }
 
 
@@ -80,6 +135,14 @@ public class JugadorController : MonoBehaviour
             //Debug.Log("Inicio corutina");
             StartCoroutine(m_pokemonHierba);
         }
+
+        if (collision.attachedRigidbody.gameObject.layer == m_EffectorLayer)
+        {
+            Debug.Log("estoy bajo un effector");
+            m_underEffector = true;
+           
+        }
+
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -88,6 +151,12 @@ public class JugadorController : MonoBehaviour
         {
              //Debug.Log("Parada corutina");
              StopCoroutine(m_pokemonHierba);
+        }
+
+        if (collision.attachedRigidbody.gameObject.layer == m_EffectorLayer)
+        {
+            Debug.Log("salgo de un effector");
+            m_underEffector = false;
         }
     }
 
@@ -101,6 +170,8 @@ public class JugadorController : MonoBehaviour
             if (m_random > 85)
             {
                 Debug.Log("Te ataca un pokemon");
+                ChangeState(SwitchMachinesStates.BATTLE);
+
             }
             else
             {

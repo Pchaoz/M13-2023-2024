@@ -610,6 +610,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InputAsset: {fileID: -944628639613478452, guid: 7d7305708e828eb4190a8a8853a6e9a9, type: 3}
+  m_Speed: 10
+  m_CurrentState: 0
 --- !u!61 &794199847
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1492,7 +1494,7 @@ GameObject:
   - component: {fileID: 1365634813}
   - component: {fileID: 1365634812}
   - component: {fileID: 1365634811}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Arena
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2319,7 +2321,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 0.5
   m_LinearDrag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -2345,6 +2347,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_InputAsset: {fileID: -944628639613478452, guid: 7d7305708e828eb4190a8a8853a6e9a9, type: 3}
+  m_Speed: 10
+  m_CurrentState: 0
 --- !u!1 &2061577713
 GameObject:
   m_ObjectHideFlags: 0
