@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -20,6 +21,9 @@ public class JugadorController : MonoBehaviour
     private int m_EffectorLayer = 0;
     private IEnumerator m_pokemonHierba;
     private bool m_underEffector;
+    private bool m_combateIniciado;
+    public Action<Boolean> OnCombatStart;
+
     private enum SwitchMachinesStates { NONE, IDLE, WALK, BATTLE };
     [SerializeField]
     private SwitchMachinesStates m_CurrentState;
@@ -89,6 +93,9 @@ public class JugadorController : MonoBehaviour
 
     private void Awake()
     {
+
+        m_combateIniciado = false;
+
         if (gameObject.CompareTag("Player1"))
         {
             m_Input = Instantiate(m_InputAsset);
@@ -164,22 +171,27 @@ public class JugadorController : MonoBehaviour
 
     IEnumerator posiblePokemonHierba()
     {
-        while (true) {
+        while (!m_combateIniciado) {
             //Debug.Log("Puede que te ataque un pokemon");
-            int m_random=Random.Range(0, 101);
-            if (m_random > 85)
+            int m_random= UnityEngine.Random.Range(0, 101);
+            if (m_random > 65)
             {
-                Debug.Log("Te ataca un pokemon");
-                ChangeState(SwitchMachinesStates.BATTLE);
-
+                CombatStart();
             }
             else
             {
                 Debug.Log("No te ataca un pokemon");
-
             }
             yield return new WaitForSeconds(5);
         }
+    }
+
+    public void CombatStart()
+    {
+        m_combateIniciado = true;
+        OnCombatStart?.Invoke(true);
+        Debug.Log("Te ataca un pokemon");
+        ChangeState(SwitchMachinesStates.BATTLE);
     }
 
 

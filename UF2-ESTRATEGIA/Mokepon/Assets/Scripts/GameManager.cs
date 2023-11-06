@@ -3,9 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class GameManager : MonoBehaviour
 {
+
+    [SerializeField]
+    Camera m_CameraWorld;
+    [SerializeField]
+    Camera m_CameraBattle;
+    [SerializeField]
+    JugadorController m_jugador1;
+    [SerializeField]
+    JugadorController m_jugador2;
+
+    bool m_enCombate;
     bool m_turnoJugador1;
     bool m_comienzoturno;
 
@@ -13,14 +25,19 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        bool m_turnoJugador1=true;
-        m_comienzoturno = true;
-        StartCoroutine("CambiodeTurno");
+        //Assert.IsNotNull(m_jugador1);
+        //Assert.IsNotNull(m_jugador2);
+        m_enCombate = false;
+        Debug.Log("Me suscribo a los jugadores");
+        m_jugador1.OnCombatStart += StartCombat;
+        m_jugador2.OnCombatStart += StartCombat;
+        Debug.Log("Me he suscrito a los jugadores");
 
     }
 
     void Update()
     {
+        if (m_enCombate) { 
         if (m_comienzoturno == true)
         {
             if (m_turnoJugador1 == true)
@@ -35,6 +52,17 @@ public class GameManager : MonoBehaviour
             }
         }
         m_comienzoturno = false;
+        }
+    }
+
+    public void StartCombat(bool b)
+    {
+        m_CameraBattle.GetComponent<Camera>().enabled = true;
+        m_enCombate = true;
+        bool m_turnoJugador1 = true;
+        m_comienzoturno = true;
+        StartCoroutine("CambiodeTurno");
+
     }
 
     public void ComunicateUI(String n)
