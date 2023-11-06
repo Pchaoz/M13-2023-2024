@@ -64,7 +64,6 @@ public class JugadorController : MonoBehaviour
         if (m_Rigidbody.velocity.x < 4 && m_Rigidbody.velocity.x > -4 && m_Rigidbody.velocity.y < 4 && m_Rigidbody.velocity.y > -4)
             m_Rigidbody.AddForce(m_MovementAction.ReadValue<Vector2>() * m_Speed);
 
-        Debug.Log(m_Rigidbody.velocity);
     }
 
     void Pararse(InputAction.CallbackContext actionContext)
@@ -101,7 +100,7 @@ public class JugadorController : MonoBehaviour
             int m_random=Random.Range(0, 101);
             if (m_random > 85)
             {
-                //Debug.Log("Te ataca un pokemon");
+                Debug.Log("Te ataca un pokemon");
             }
             else
             {
