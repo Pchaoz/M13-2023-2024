@@ -11,7 +11,7 @@ public class Mokepon : MonoBehaviour
     [SerializeField]
     private int m_Hp;
     [SerializeField]
-    private List<AttackInfo> m_AttacksList;
+    public List<AttackInfo> m_AttacksList;
     [SerializeField]
     private string m_Type;
     [SerializeField]
@@ -30,30 +30,30 @@ public class Mokepon : MonoBehaviour
     {
         if (atk.type == m_Type)
         {
-            //SOLO RECIBE EL DAÑO BASE NO HAY MULTIPLICADOR PORQUE ES DEL MISMO TIPO
+            //SOLO RECIBE EL DAï¿½O BASE NO HAY MULTIPLICADOR PORQUE ES DEL MISMO TIPO
             m_Hp -= atk.damage;
         }else if (atk.type == "Fuego" )
         {
             if (m_Type == "Hoja")
             {
-                //Daño por 2?
+                //Daï¿½o por 2?
                 m_Hp -= (atk.damage * 2);
             }
             else if (m_Type == "Agua")
             {
-                //Daño reducido? entre 2?
+                //Daï¿½o reducido? entre 2?
                 m_Hp -= (atk.damage / 2);
             }
         }else if (atk.type == "Hoja")
         {
             if (m_Type == "Fuego")
             {
-                //Daño por 2?
+                //Daï¿½o por 2?
                 m_Hp -= (atk.damage * 2);
             }
             else if (m_Type == "Agua")
             {
-                //Daño reducido? entre 2?
+                //Daï¿½o reducido? entre 2?
                 m_Hp -= (atk.damage / 2);
             }
         }
@@ -61,12 +61,12 @@ public class Mokepon : MonoBehaviour
         {
             if (m_Type == "Hoja")
             {
-                //Daño por 2?
+                //Daï¿½o por 2?
                 m_Hp -= (atk.damage * 2);
             }
             else if (m_Type == "Fuego")
             {
-                //Daño reducido? entre 2?
+                //Daï¿½o reducido? entre 2?
                 m_Hp -= (atk.damage / 2);
             }
         } 
