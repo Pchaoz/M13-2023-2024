@@ -17,12 +17,63 @@ public class Mokepon : MonoBehaviour
     [SerializeField]
     private string m_State;
 
-    void LoadInfo(MokeponInfo info)
+    public void LoadInfo(MokeponInfo info)
     {
         m_Name = info.mokename;
         m_Hp = info.hp;
         m_AttacksList = info.attackList;
         m_Type = info.type;
         m_State = info.state;
+    }
+
+    public void ReciveAttack(AttackInfo atk)
+    {
+        if (atk.type == m_Type)
+        {
+            //SOLO RECIBE EL DAÑO BASE NO HAY MULTIPLICADOR PORQUE ES DEL MISMO TIPO
+            m_Hp -= atk.damage;
+        }else if (atk.type == "Fuego" )
+        {
+            if (m_Type == "Hoja")
+            {
+                //Daño por 2?
+                m_Hp -= (atk.damage * 2);
+            }
+            else if (m_Type == "Agua")
+            {
+                //Daño reducido? entre 2?
+                m_Hp -= (atk.damage / 2);
+            }
+        }else if (atk.type == "Hoja")
+        {
+            if (m_Type == "Fuego")
+            {
+                //Daño por 2?
+                m_Hp -= (atk.damage * 2);
+            }
+            else if (m_Type == "Agua")
+            {
+                //Daño reducido? entre 2?
+                m_Hp -= (atk.damage / 2);
+            }
+        }
+        else if (atk.type == "Agua")
+        {
+            if (m_Type == "Hoja")
+            {
+                //Daño por 2?
+                m_Hp -= (atk.damage * 2);
+            }
+            else if (m_Type == "Fuego")
+            {
+                //Daño reducido? entre 2?
+                m_Hp -= (atk.damage / 2);
+            }
+        } 
+    }
+    public void SendAttack(int choise)
+    {
+        m_AttacksList[choise].pp--;
+        //Se envia al game manager y el game manager al 
     }
 }
