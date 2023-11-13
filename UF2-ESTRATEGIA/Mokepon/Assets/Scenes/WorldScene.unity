@@ -478,6 +478,7 @@ MonoBehaviour:
   m_InputAsset: {fileID: -944628639613478452, guid: 7d7305708e828eb4190a8a8853a6e9a9, type: 3}
   m_Speed: 10
   m_enHierba: 0
+  m_posicion: {fileID: 11400000, guid: f595e82c4ce89444da9ff63f2fd8f1a5, type: 2}
   m_CurrentState: 0
 --- !u!61 &794199847
 BoxCollider2D:
@@ -2129,6 +2130,7 @@ MonoBehaviour:
   m_InputAsset: {fileID: -944628639613478452, guid: 7d7305708e828eb4190a8a8853a6e9a9, type: 3}
   m_Speed: 10
   m_enHierba: 0
+  m_posicion: {fileID: 11400000, guid: b22e9b7b6ea105c44b4dc215115d7a6a, type: 2}
   m_CurrentState: 0
 --- !u!114 &2038409297
 MonoBehaviour:

@@ -7,6 +7,7 @@ using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
+using UnityEngine.UIElements;
 
 public class JugadorController : MonoBehaviour
 {
@@ -22,10 +23,8 @@ public class JugadorController : MonoBehaviour
     private int m_EffectorLayer = 0;
     private bool m_underEffector;
     public Action<Boolean> OnpisandoHierba;
+    public Action<Vector2> Onultimapocion;
     public bool m_enHierba;
-
-
-
 
     private enum SwitchMachinesStates { NONE, IDLE, WALK, BATTLE };
     [SerializeField]
