@@ -32,7 +32,7 @@ public class CombatStateMachine : MonoBehaviour
                 if (atk1.pp > 0)
                 {
                     atk1.pp--;
-                    m_MokeponIA.RecibeAttack(atk1);
+                    m_MokeponIA.GetComponent<Mokepon>().ReciveAttack(atk1);
                     ChangeState(States.PLAYER2);
                 }
                 break;
@@ -41,7 +41,7 @@ public class CombatStateMachine : MonoBehaviour
                 if (atk2.pp > 0)
                 {
                     atk2.pp--;
-                    m_MokeponIA.RecibeAttack(atk2);
+                    m_MokeponIA.GetComponent<Mokepon>().ReciveAttack(atk2);
                     ChangeState(States.PLAYER2);
                 }
                 break;
@@ -50,8 +50,8 @@ public class CombatStateMachine : MonoBehaviour
                 if (atkIA.pp > 0)
                 {
                     atkIA.pp--;
-                    m_MokeponJ1.RecibeAttack(atkIA);
-                    m_MokeponJ2.RecibeAttack(atkIA);
+                    m_MokeponJ1.GetComponent<Mokepon>().ReciveAttack(atkIA);
+                    m_MokeponJ2.GetComponent<Mokepon>().ReciveAttack(atkIA);
                     ChangeState(States.PLAYER2);
                 }
                 break;

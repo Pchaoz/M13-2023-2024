@@ -13,7 +13,7 @@ public class BattleUIController : MonoBehaviour
 
     void Start()
     {
-        m_battleText.text = "Comença el combat Pokemon";
+        //m_battleText.text = "Comença el combat Pokemon";
         m_gameManager.OnComunicateUI += OnMostrarCambios;
     }
 
