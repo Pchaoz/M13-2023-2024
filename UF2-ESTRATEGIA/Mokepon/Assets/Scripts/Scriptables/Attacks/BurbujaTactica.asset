@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e91bab966b426d6468df911cb9414409, type: 3}
   m_Name: BurbujaTactica
   m_EditorClassIdentifier: 
-  name: BurbujaTactica
+  moveName: Brubuja tactica
   damage: 12
   pp: 30
-  type: Agua
-  state: NONE
+  type: 0
+  state: 0

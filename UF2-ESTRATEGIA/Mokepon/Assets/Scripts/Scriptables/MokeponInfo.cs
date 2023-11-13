@@ -8,6 +8,6 @@ public class MokeponInfo : ScriptableObject
     public string mokename;
     public int hp;
     public List<AttackInfo> attackList;
-    public string type;
+    public Types type;
     public States state;
 }

@@ -17,5 +17,5 @@ MonoBehaviour:
   attackList:
   - {fileID: 11400000, guid: 51f88dc4f38816b43a21f15203a531e2, type: 2}
   - {fileID: 11400000, guid: 5faf72c391e41dd4f81e65a79eb6a8b1, type: 2}
-  type: Hierba
-  state: NONE
+  type: 0
+  state: 0

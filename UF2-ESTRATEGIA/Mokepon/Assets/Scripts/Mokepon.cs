@@ -14,7 +14,7 @@ public class Mokepon : MonoBehaviour
     [SerializeField]
     public List<Attack> m_AttacksList;
     [SerializeField]
-    private string m_Type;
+    private Types m_Type;
     [SerializeField]
     public States m_State;
 
@@ -26,7 +26,8 @@ public class Mokepon : MonoBehaviour
         m_Type = info.type;
         m_State = info.state;
 
-        foreach (AttackInfo atk in info.attackList) {
+        foreach (AttackInfo atk in info.attackList)
+        {
             Attack at = new Attack(atk);
             m_AttacksList.Add(at);
         }
@@ -41,50 +42,52 @@ public class Mokepon : MonoBehaviour
             dmg = atk.damage;
             GetHurt(dmg);
         }
-        else if (atk.type == "Fuego")
+        else if (atk.type == Types.Fuego)
         {
-            if (m_Type == "Hoja")
+            if (m_Type == Types.Hierba)
             {
                 //Da�o por 2?
                 dmg = atk.damage / 2;
                 GetHurt(dmg);
             }
-            else if (m_Type == "Agua")
+            else if (m_Type == Types.Agua)
             {
                 //Da�o reducido? entre 2?
                 dmg = atk.damage * 2;
                 GetHurt(dmg);
             }
-        }else if (atk.type == "Hoja")
+        }
+        else if (atk.type == Types.Hierba)
         {
-            if (m_Type == "Fuego")
+            if (m_Type == Types.Fuego)
             {
                 //Da�o por 2?
                 dmg = atk.damage * 2;
                 GetHurt(dmg);
             }
-            else if (m_Type == "Agua")
+            else if (m_Type == Types.Agua)
             {
                 //Da�o reducido? entre 2?
                 dmg = atk.damage / 2;
                 GetHurt(dmg);
             }
         }
-        else if (atk.type == "Agua")
+        else if (atk.type == Types.Agua)
         {
-            if (m_Type == "Hoja")
+            if (m_Type == Types.Hierba)
             {
                 //Da�o por 2?
                 dmg = atk.damage * 2;
                 GetHurt(dmg);
             }
-            else if (m_Type == "Fuego")
+            else if (m_Type == Types.Fuego)
             {
                 //Da�o reducido? entre 2?
                 dmg = atk.damage / 2;
                 GetHurt(dmg);
             }
-        }else
+        }
+        else
         {
             dmg = atk.damage;
             GetHurt(dmg);
@@ -95,11 +98,6 @@ public class Mokepon : MonoBehaviour
     private void GetHurt(int dmg)
     {
         Debug.Log("TENGO " + m_Hp + " DE VIDA Y RECIBO " + dmg + " DE DAÑO");
-        m_Hp-= dmg;
-    }
-    public void SendAttack(int choise)
-    {
-        m_AttacksList[choise].pp--;
-        //Se envia al game manager y el game manager al 
+        m_Hp -= dmg;
     }
 }

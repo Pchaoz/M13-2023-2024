@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e91bab966b426d6468df911cb9414409, type: 3}
   m_Name: Mimir
   m_EditorClassIdentifier: 
-  name: A mimir
+  moveName: A mimir
   damage: 0
   pp: 5
-  type: Normal
-  state: SLEEP
+  type: 0
+  state: 0
