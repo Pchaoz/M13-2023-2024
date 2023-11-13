@@ -9,8 +9,6 @@ public class BattleUIController : MonoBehaviour
 
     [SerializeField]
     TextMeshProUGUI m_battleText;
-    [SerializeField]
-    GameManager m_gameManager;
 
     void Start()
     {

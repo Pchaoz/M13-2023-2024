@@ -1,84 +1,33 @@
-using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-
-    [SerializeField]
-    Camera m_CameraWorld;
-    [SerializeField]
-    Camera m_CameraBattle;
-    [SerializeField]
-    JugadorController m_jugador1;
-    [SerializeField]
-    JugadorController m_jugador2;
-    private IEnumerator m_pokemonHierba;
-    bool m_enHierba;
-    bool m_enCombate;
-    [SerializeField]
-    GameEventBoolean m_comienzoCombate;
+    private static GameManager m_Instance;
+    public static GameManager Instance
+    {
+        get { return m_Instance; }
+    }
 
     private void Awake()
     {
-        m_pokemonHierba = posiblePokemonHierba();
-        m_enHierba = false;
-        m_jugador1.OnpisandoHierba += JugadorHierba;
-        m_jugador2.OnpisandoHierba += JugadorHierba;
-        m_enCombate = false;
-    }
-    private void OnDisable()
-    {
-        m_jugador1.OnpisandoHierba -= JugadorHierba;
-        m_jugador2.OnpisandoHierba -= JugadorHierba;
-    }
-
-
-
-    public void JugadorHierba(bool b)
-    {
-        if (b)
-        {
-            if (!m_enHierba &&(m_jugador2.m_enHierba|| m_jugador1.m_enHierba))
-            {
-                StartCoroutine(m_pokemonHierba);
-                m_enHierba = true;
-            }
-        }
+        if (m_Instance == null)
+            m_Instance = this;
         else
         {
-            if (m_enHierba && (!m_jugador2.m_enHierba || !m_jugador1.m_enHierba))
-            {
-                StopCoroutine(m_pokemonHierba);
-                m_enHierba = false;
-            }
-               
+            Destroy(gameObject);
+            return;
         }
-       
+
+        DontDestroyOnLoad(gameObject);
+
+
     }
 
-
-    IEnumerator posiblePokemonHierba()
+    public void IniciarEscenaCombate()
     {
-        while (!m_enCombate)
-        {
-            Debug.Log("Puede que te ataque un pokemon");
-            int m_random = UnityEngine.Random.Range(0, 101);
-            if (m_random > 65)
-            {
-                m_comienzoCombate.Raise(true);
-                m_enCombate = true;
-                m_CameraBattle.GetComponent<Camera>().enabled = true;
-            }
-            else
-            {
-                Debug.Log("No te ataca un pokemon");
-            }
-            yield return new WaitForSeconds(5);
-        }
+        SceneManager.LoadScene("BattleScene");
     }
-
-   
-
-   
 }
