@@ -30,4 +30,10 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("BattleScene");
     }
+
+
+    public void SalirEscenaCombate()
+    {
+        SceneManager.LoadScene("WorldScene");
+    }
 }
