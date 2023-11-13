@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2882179f1d368bf41bd37da20424b74f, type: 3}
-  m_Name: Snorlax
+  m_Name: CaterPastel
   m_EditorClassIdentifier: 
-  hp: 50
+  mokename: CartePastel
+  hp: 45
   attackList:
-  - {fileID: 11400000, guid: 5dfb3221091a75841b307157575e0a10, type: 2}
-  - {fileID: 11400000, guid: 4590f219b2cc9f644ae63a4529c9f57f, type: 2}
-  type: Normal
-  state: None
+  - {fileID: 11400000, guid: 51f88dc4f38816b43a21f15203a531e2, type: 2}
+  - {fileID: 11400000, guid: 5faf72c391e41dd4f81e65a79eb6a8b1, type: 2}
+  type: Hierba
+  state: NONE

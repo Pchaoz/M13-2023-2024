@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_battleText: {fileID: 0}
-  m_gameManager: {fileID: 0}
+  m_gameManager: {fileID: 299887232}
 --- !u!1 &207801172
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,6 +314,7 @@ GameObject:
   m_Component:
   - component: {fileID: 299887233}
   - component: {fileID: 299887232}
+  - component: {fileID: 299887234}
   m_Layer: 0
   m_Name: gameManager
   m_TagString: Untagged
@@ -348,6 +349,47 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &299887234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299887231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 853f3bed8384c3f439c8610da1d30e08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PossibleMoke:
+  - {fileID: 11400000, guid: 04dd89e65617b6a4f88790202d3527bc, type: 2}
+  - {fileID: 11400000, guid: 07b8c957171f4094e9d8464ebf25af38, type: 2}
+  - {fileID: 11400000, guid: 9e38c3118870b544b92fab80ab924980, type: 2}
+  m_MokeponJ1: {fileID: 828833519}
+  m_MokeponJ2: {fileID: 624905123}
+  m_MokeponIA: {fileID: 495832897}
+--- !u!114 &495832897 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7553960332924745625, guid: b68eec87cf9cac14d8a6594d21c75b9e, type: 3}
+  m_PrefabInstance: {fileID: 1100342200}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36bc45233a8c0dc4daabd5abe13c7cc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &624905123 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7553960332924745625, guid: b68eec87cf9cac14d8a6594d21c75b9e, type: 3}
+  m_PrefabInstance: {fileID: 646341074}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36bc45233a8c0dc4daabd5abe13c7cc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &646341074
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -409,6 +451,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b68eec87cf9cac14d8a6594d21c75b9e, type: 3}
+--- !u!114 &828833519 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7553960332924745625, guid: b68eec87cf9cac14d8a6594d21c75b9e, type: 3}
+  m_PrefabInstance: {fileID: 1378583184}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36bc45233a8c0dc4daabd5abe13c7cc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1100342200
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -419,7 +472,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3620052880798262638, guid: b68eec87cf9cac14d8a6594d21c75b9e, type: 3}
       propertyPath: m_Name
-      value: Mokepon_Enemy
+      value: Mokepon_IA
       objectReference: {fileID: 0}
     - target: {fileID: 8505828577583041826, guid: b68eec87cf9cac14d8a6594d21c75b9e, type: 3}
       propertyPath: m_RootOrder

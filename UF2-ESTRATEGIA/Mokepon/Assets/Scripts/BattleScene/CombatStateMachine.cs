@@ -8,6 +8,7 @@ public class CombatStateMachine : MonoBehaviour
 
     //STATES
     private enum States { NONE, IDLE, PLAYER1, PLAYER2, IA };
+    [SerializeField]
     private States m_CurrentState;
 
     private void ChangeState(States newState)
@@ -18,6 +19,7 @@ public class CombatStateMachine : MonoBehaviour
             return;
 
         ExitState();
+        Debug.Log(newState);
         InitState(newState);
     }
 
@@ -28,32 +30,35 @@ public class CombatStateMachine : MonoBehaviour
             case States.IDLE:
                 break;
             case States.PLAYER1:
-                AttackInfo atk1 = m_MokeponJ1.m_AttacksList[Random.Range(1, m_MokeponJ1.m_AttacksList.Count)];
+                Attack atk1 = m_MokeponJ1.m_AttacksList[Random.Range(0, m_MokeponJ1.m_AttacksList.Count)];
                 if (atk1.pp > 0)
                 {
                     atk1.pp--;
                     m_MokeponIA.GetComponent<Mokepon>().ReciveAttack(atk1);
                     ChangeState(States.PLAYER2);
                 }
+                Debug.Log("NO ATACO A ESTE ATAQUE NO LE QUEDAN PP (JUGADOR 1)");
                 break;
             case States.PLAYER2:
-                AttackInfo atk2 = m_MokeponJ2.m_AttacksList[Random.Range(1, m_MokeponJ2.m_AttacksList.Count)];
+                Attack atk2 = m_MokeponJ2.m_AttacksList[Random.Range(0, m_MokeponJ2.m_AttacksList.Count)];
                 if (atk2.pp > 0)
                 {
                     atk2.pp--;
                     m_MokeponIA.GetComponent<Mokepon>().ReciveAttack(atk2);
-                    ChangeState(States.PLAYER2);
+                    ChangeState(States.IA);
                 }
+                Debug.Log("NO ATACO A ESTE ATAQUE NO LE QUEDAN PP (JUGADOR 2)");
                 break;
             case States.IA:
-                AttackInfo atkIA = m_MokeponIA.m_AttacksList[Random.Range(1, m_MokeponIA.m_AttacksList.Count)];
+                Attack atkIA = m_MokeponIA.m_AttacksList[Random.Range(0, m_MokeponIA.m_AttacksList.Count)];
                 if (atkIA.pp > 0)
                 {
                     atkIA.pp--;
                     m_MokeponJ1.GetComponent<Mokepon>().ReciveAttack(atkIA);
                     m_MokeponJ2.GetComponent<Mokepon>().ReciveAttack(atkIA);
-                    ChangeState(States.PLAYER2);
+                    ChangeState(States.PLAYER1);
                 }
+                Debug.Log("NO ATACO A ESTE ATAQUE NO LE QUEDAN PP (IA)");
                 break;
         }
     }
@@ -97,15 +102,19 @@ public class CombatStateMachine : MonoBehaviour
     List<MokeponInfo> m_PossibleMoke;
 
     //JUGADORES
+    [SerializeField]
     private Mokepon m_MokeponJ1;
+    [SerializeField]
     private Mokepon m_MokeponJ2;
 
     //IA
+    [SerializeField]
     private Mokepon m_MokeponIA;
 
     private void Start()
     {
         InitState(States.IDLE);
+        SetUpBattle();
     }
 
     private void Update()
@@ -113,13 +122,16 @@ public class CombatStateMachine : MonoBehaviour
         UpdateState();
     }
 
-    public void SetUpBattle(Mokepon Moke1)
+    public void SetUpBattle()
     {
-        int Moke = Random.Range(1, m_PossibleMoke.Count); //ESCOJO UN MOKEPON ALEATORIO CONTRA EL QUE LUCHAR
+        int Moke = Random.Range(0, m_PossibleMoke.Count); //ESCOJO UN MOKEPON ALEATORIO CONTRA EL QUE LUCHAR
         m_MokeponIA.LoadInfo(m_PossibleMoke[Moke]); //LO CARGO COMO MOKEPON ENEMIGO
 
         //CARGO LOS MOKEPONS
-        m_MokeponJ1 = Moke1;
+        Moke = Random.Range(1, m_PossibleMoke.Count);
+        m_MokeponJ1.LoadInfo(m_PossibleMoke[Moke]);
+        Moke = Random.Range(1, m_PossibleMoke.Count);
+        m_MokeponJ2.LoadInfo(m_PossibleMoke[Moke]);
 
         ChangeState(States.PLAYER1); //EMPIEZA EL J1
     }
