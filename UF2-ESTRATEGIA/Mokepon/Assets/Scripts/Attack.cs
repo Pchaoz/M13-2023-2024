@@ -7,8 +7,8 @@ public class Attack
     public string name;
     public int damage;
     public int pp;
-    public string type;
-    public string state;
+    public Types type;
+    public States state;
 
     public Attack(AttackInfo info)
     {

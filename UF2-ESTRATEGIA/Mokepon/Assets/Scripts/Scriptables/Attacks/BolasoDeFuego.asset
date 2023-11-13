@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e91bab966b426d6468df911cb9414409, type: 3}
   m_Name: BolasoDeFuego
   m_EditorClassIdentifier: 
-  name: BolasoFuego
+  moveName: Bolaso de fuego
   damage: 15
   pp: 10
-  type: Fuego
-  state: NONE
+  type: 0
+  state: 0
