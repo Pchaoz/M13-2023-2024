@@ -1,9 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Assertions;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,66 +13,72 @@ public class GameManager : MonoBehaviour
     JugadorController m_jugador1;
     [SerializeField]
     JugadorController m_jugador2;
-
+    private IEnumerator m_pokemonHierba;
+    bool m_enHierba;
     bool m_enCombate;
-    bool m_turnoJugador1;
-    bool m_comienzoturno;
+    [SerializeField]
+    GameEventBoolean m_comienzoCombate;
 
-    public Action<String> OnComunicateUI;
-
-    void Start()
+    private void Awake()
     {
-        //Assert.IsNotNull(m_jugador1);
-        //Assert.IsNotNull(m_jugador2);
+        m_pokemonHierba = posiblePokemonHierba();
+        m_enHierba = false;
+        m_jugador1.OnpisandoHierba += JugadorHierba;
+        m_jugador2.OnpisandoHierba += JugadorHierba;
         m_enCombate = false;
-        Debug.Log("Me suscribo a los jugadores");
-        m_jugador1.OnCombatStart += StartCombat;
-        m_jugador2.OnCombatStart += StartCombat;
-        Debug.Log("Me he suscrito a los jugadores");
-
+    }
+    private void OnDisable()
+    {
+        m_jugador1.OnpisandoHierba -= JugadorHierba;
+        m_jugador2.OnpisandoHierba -= JugadorHierba;
     }
 
-    void Update()
+
+
+    public void JugadorHierba(bool b)
     {
-        if (m_enCombate) { 
-        if (m_comienzoturno == true)
+        if (b)
         {
-            if (m_turnoJugador1 == true)
+            if (!m_enHierba &&(m_jugador2.m_enHierba|| m_jugador1.m_enHierba))
             {
-                ComunicateUI("Turno jugador 1");
-                m_turnoJugador1 = false;
+                StartCoroutine(m_pokemonHierba);
+                m_enHierba = true;
+            }
+        }
+        else
+        {
+            if (m_enHierba && (!m_jugador2.m_enHierba || !m_jugador1.m_enHierba))
+            {
+                StopCoroutine(m_pokemonHierba);
+                m_enHierba = false;
+            }
+               
+        }
+       
+    }
+
+
+    IEnumerator posiblePokemonHierba()
+    {
+        while (!m_enCombate)
+        {
+            Debug.Log("Puede que te ataque un pokemon");
+            int m_random = UnityEngine.Random.Range(0, 101);
+            if (m_random > 65)
+            {
+                m_comienzoCombate.Raise(true);
+                m_enCombate = true;
+                m_CameraBattle.GetComponent<Camera>().enabled = true;
             }
             else
             {
-                ComunicateUI("Turno jugador 2");
-                m_turnoJugador1 = true;
+                Debug.Log("No te ataca un pokemon");
             }
-        }
-        m_comienzoturno = false;
-        }
-    }
-
-    public void StartCombat(bool b)
-    {
-        m_CameraBattle.GetComponent<Camera>().enabled = true;
-        m_enCombate = true;
-        bool m_turnoJugador1 = true;
-        m_comienzoturno = true;
-        StartCoroutine("CambiodeTurno");
-
-    }
-
-    public void ComunicateUI(String n)
-    {
-        OnComunicateUI?.Invoke(n);
-    }
-
-    IEnumerator CambiodeTurno()
-    {
-        while (true)
-        {
             yield return new WaitForSeconds(5);
-            m_comienzoturno = true;
         }
     }
+
+   
+
+   
 }

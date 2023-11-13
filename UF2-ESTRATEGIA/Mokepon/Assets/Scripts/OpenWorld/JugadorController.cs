@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor.Timeline.Actions;
 using UnityEngine;
@@ -19,10 +20,12 @@ public class JugadorController : MonoBehaviour
     private Rigidbody2D m_Rigidbody;
     private int m_DangerLayer=0;
     private int m_EffectorLayer = 0;
-    private IEnumerator m_pokemonHierba;
     private bool m_underEffector;
-    private bool m_combateIniciado;
-    public Action<Boolean> OnCombatStart;
+    public Action<Boolean> OnpisandoHierba;
+    public bool m_enHierba;
+
+
+
 
     private enum SwitchMachinesStates { NONE, IDLE, WALK, BATTLE };
     [SerializeField]
@@ -75,17 +78,14 @@ public class JugadorController : MonoBehaviour
                 if (m_Rigidbody.velocity.x < 1 && m_Rigidbody.velocity.x > -1 && m_Rigidbody.velocity.y < 1 && m_Rigidbody.velocity.y > -1)
                 {
                     m_Rigidbody.AddForce(m_MovementAction.ReadValue<Vector2>() * m_Speed);
-                    Debug.Log("Voy a" +m_Rigidbody.velocity);
-                    Debug.Log("Recibo "+m_MovementAction.ReadValue<Vector2>());
-
                 }
 
                 if (m_MovementAction.ReadValue<Vector2>() == new Vector2(0, 0))
                     ChangeState(SwitchMachinesStates.IDLE);
                 break;
-
-           
-
+            case SwitchMachinesStates.BATTLE:
+                Debug.Log("Estoy en combate");
+                break;
         }
     }
 
@@ -94,16 +94,16 @@ public class JugadorController : MonoBehaviour
     private void Awake()
     {
 
-        m_combateIniciado = false;
+       
 
         if (gameObject.CompareTag("Player1"))
         {
             m_Input = Instantiate(m_InputAsset);
             m_MovementAction = m_Input.FindActionMap("OpenWorld").FindAction("WorldActions");
             m_Input.FindActionMap("OpenWorld").Enable();
-            m_Rigidbody = GetComponent<Rigidbody2D>();
-            m_pokemonHierba = posiblePokemonHierba();
+            m_Rigidbody = GetComponent<Rigidbody2D>();      
             m_Input.FindActionMap("OpenWorld").FindAction("WorldActions");
+           
 
         }
         else
@@ -112,10 +112,10 @@ public class JugadorController : MonoBehaviour
             m_MovementAction = m_Input.FindActionMap("OpenWorld2").FindAction("WorldActions");
             m_Input.FindActionMap("OpenWorld2").Enable();
             m_Rigidbody = GetComponent<Rigidbody2D>();
-            m_pokemonHierba = posiblePokemonHierba();
             m_Input.FindActionMap("OpenWorld2").FindAction("WorldActions");
+
         }
-       
+
 
     }
 
@@ -139,15 +139,17 @@ public class JugadorController : MonoBehaviour
     {
         if (collision.attachedRigidbody.gameObject.layer == m_DangerLayer)
         {
-            //Debug.Log("Inicio corutina");
-            StartCoroutine(m_pokemonHierba);
+            Debug.Log("soy el jugador " + gameObject.tag+" y he pidado la hierba");
+            m_enHierba = true;
+            OnpisandoHierba?.Invoke(true);
+            
+
         }
 
         if (collision.attachedRigidbody.gameObject.layer == m_EffectorLayer)
         {
             Debug.Log("estoy bajo un effector");
-            m_underEffector = true;
-           
+            m_underEffector = true;     
         }
 
     }
@@ -156,8 +158,10 @@ public class JugadorController : MonoBehaviour
     {
         if (collision.attachedRigidbody.gameObject.layer == m_DangerLayer)
         {
-             //Debug.Log("Parada corutina");
-             StopCoroutine(m_pokemonHierba);
+            Debug.Log("soy el jugador " + gameObject.tag + " y he salido de la hierba");
+            m_enHierba = false;
+            OnpisandoHierba?.Invoke(false);
+            
         }
 
         if (collision.attachedRigidbody.gameObject.layer == m_EffectorLayer)
@@ -166,30 +170,8 @@ public class JugadorController : MonoBehaviour
             m_underEffector = false;
         }
     }
-
-    
-
-    IEnumerator posiblePokemonHierba()
-    {
-        while (!m_combateIniciado) {
-            //Debug.Log("Puede que te ataque un pokemon");
-            int m_random= UnityEngine.Random.Range(0, 101);
-            if (m_random > 65)
-            {
-                CombatStart();
-            }
-            else
-            {
-                Debug.Log("No te ataca un pokemon");
-            }
-            yield return new WaitForSeconds(5);
-        }
-    }
-
     public void CombatStart()
     {
-        m_combateIniciado = true;
-        OnCombatStart?.Invoke(true);
         Debug.Log("Te ataca un pokemon");
         ChangeState(SwitchMachinesStates.BATTLE);
     }
