@@ -9,5 +9,5 @@ public class MokeponInfo : ScriptableObject
     public int hp;
     public List<AttackInfo> attackList;
     public string type;
-    public string state;
+    public States state;
 }
