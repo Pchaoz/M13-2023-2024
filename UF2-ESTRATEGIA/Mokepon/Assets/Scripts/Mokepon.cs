@@ -4,8 +4,72 @@ using UnityEngine;
 
 public class Mokepon : MonoBehaviour
 {
+
+
+    //STATES
+
     [SerializeField]
-    private string m_Name;
+    private States m_CurrentState;
+
+    private void ChangeState(States newState)
+    {
+        //Debug.Log(newState);
+
+        if (newState == m_CurrentState)
+            return;
+
+        ExitState();
+        Debug.Log(newState);
+        InitState(newState);
+    }
+
+    private void UpdateState()
+    {
+        switch (m_CurrentState)
+        {
+            case States.NONE:
+
+                break;
+            case States.SLEEP:
+
+                break;
+            case States.DEFEATED:
+
+                break;
+        }
+    }
+    private void InitState(States currentState)
+    {
+        m_CurrentState = currentState;
+
+        switch (m_CurrentState)
+        {
+            case States.NONE:
+                break;
+            case States.SLEEP:
+                break;
+            case States.DEFEATED:
+                break;
+        }
+    }
+    private void ExitState()
+    {
+        switch (m_CurrentState)
+        {
+            case States.NONE:
+                break;
+            case States.SLEEP:
+                break;
+            case States.DEFEATED:
+                break;
+        }
+    }
+
+    // ------------------------------------------------------------------------------------------ \\
+
+
+    [SerializeField]
+    private string m_Mokename;
 
     //MOKEPON STATS
     [Header("POKEMON STATS")]
@@ -18,10 +82,15 @@ public class Mokepon : MonoBehaviour
     [SerializeField]
     public States m_State;
 
+    private void Awake()
+    {
+        UpdateState();
+    }
+
     public void LoadInfo(MokeponInfo info)
     {
         m_AttacksList = new List<Attack>();
-        m_Name = info.mokename;
+        m_Mokename = info.mokename;
         m_Hp = info.hp;
         m_Type = info.type;
         m_State = info.state;
@@ -92,7 +161,9 @@ public class Mokepon : MonoBehaviour
             dmg = atk.damage;
             GetHurt(dmg);
         }
-        Debug.Log("HE RECIBIDO UN ATAQUE Y AHORA MI VIDA ES MENOR. MI VIDA ES: " + m_Hp);
+        Debug.Log("HE RECIBIDO EL ATAQUE " + atk.moveName + " Y AHORA MI VIDA ES MENOR. MI VIDA ES: " + m_Hp);
+        if (m_Hp < 1)
+            m_State = States.DEFEATED;
     }
 
     private void GetHurt(int dmg)

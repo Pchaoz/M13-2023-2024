@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Attack
 {
-    public string name;
+    public string moveName;
     public int damage;
     public int pp;
     public Types type;
@@ -12,7 +12,7 @@ public class Attack
 
     public Attack(AttackInfo info)
     {
-        name = info.name;
+        moveName = info.name;
         damage = info.damage;
         pp = info.pp;
         type = info.type;
