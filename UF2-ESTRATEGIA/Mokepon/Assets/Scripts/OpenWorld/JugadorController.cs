@@ -1,10 +1,13 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
+using UnityEngine.UIElements;
 
 public class JugadorController : MonoBehaviour
 {
@@ -15,11 +18,16 @@ public class JugadorController : MonoBehaviour
     private InputAction m_MovementAction;
     [SerializeField]
     private int m_Speed=30;
+    float maxSpeed = 5.0f;
     private Rigidbody2D m_Rigidbody;
     private int m_DangerLayer=0;
     private int m_EffectorLayer = 0;
-    private IEnumerator m_pokemonHierba;
     private bool m_underEffector;
+    public Action<Boolean> OnpisandoHierba;
+    public bool m_enHierba;
+    [SerializeField]
+    GameEventVector3 m_Ultimaposicion;
+
     private enum SwitchMachinesStates { NONE, IDLE, WALK, BATTLE };
     [SerializeField]
     private SwitchMachinesStates m_CurrentState;
@@ -46,8 +54,9 @@ public class JugadorController : MonoBehaviour
 
                 break;
             case SwitchMachinesStates.BATTLE:
+                
                 m_Rigidbody.velocity = Vector2.zero;
-
+                
                 break;
         }
 
@@ -68,20 +77,16 @@ public class JugadorController : MonoBehaviour
 
                 break;
             case SwitchMachinesStates.WALK:
-                if (m_Rigidbody.velocity.x < 1 && m_Rigidbody.velocity.x > -1 && m_Rigidbody.velocity.y < 1 && m_Rigidbody.velocity.y > -1)
-                {
-                    m_Rigidbody.AddForce(m_MovementAction.ReadValue<Vector2>() * m_Speed);
-                    Debug.Log("Voy a" +m_Rigidbody.velocity);
-                    Debug.Log("Recibo "+m_MovementAction.ReadValue<Vector2>());
-
-                }
+               m_Rigidbody.AddForce(m_MovementAction.ReadValue<Vector2>() * m_Speed);
+                Vector2 clampedVelocity = Vector2.ClampMagnitude(m_Rigidbody.velocity, maxSpeed);
+                m_Rigidbody.velocity = clampedVelocity;
 
                 if (m_MovementAction.ReadValue<Vector2>() == new Vector2(0, 0))
                     ChangeState(SwitchMachinesStates.IDLE);
                 break;
-
-           
-
+            case SwitchMachinesStates.BATTLE:
+              
+                break;
         }
     }
 
@@ -89,27 +94,19 @@ public class JugadorController : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("Jugador Awake");
+
+        m_Rigidbody = GetComponent<Rigidbody2D>();
+
+        m_Input = Instantiate(m_InputAsset);
+
         if (gameObject.CompareTag("Player1"))
-        {
-            m_Input = Instantiate(m_InputAsset);
-            m_MovementAction = m_Input.FindActionMap("OpenWorld").FindAction("WorldActions");
-            m_Input.FindActionMap("OpenWorld").Enable();
-            m_Rigidbody = GetComponent<Rigidbody2D>();
-            m_pokemonHierba = posiblePokemonHierba();
-            m_Input.FindActionMap("OpenWorld").FindAction("WorldActions");
-
-        }
+            m_Input.bindingMask = InputBinding.MaskByGroup("Jugador1");
         else
-        {
-            m_Input = Instantiate(m_InputAsset);
-            m_MovementAction = m_Input.FindActionMap("OpenWorld2").FindAction("WorldActions");
-            m_Input.FindActionMap("OpenWorld2").Enable();
-            m_Rigidbody = GetComponent<Rigidbody2D>();
-            m_pokemonHierba = posiblePokemonHierba();
-            m_Input.FindActionMap("OpenWorld2").FindAction("WorldActions");
-        }
-       
+            m_Input.bindingMask = InputBinding.MaskByGroup("Jugador2");
 
+        m_MovementAction = m_Input.FindActionMap("OpenWorld").FindAction("WorldActions");
+        m_Input.FindActionMap("OpenWorld").Enable();
     }
 
     // Start is called before the first frame update
@@ -132,25 +129,26 @@ public class JugadorController : MonoBehaviour
     {
         if (collision.attachedRigidbody.gameObject.layer == m_DangerLayer)
         {
-            //Debug.Log("Inicio corutina");
-            StartCoroutine(m_pokemonHierba);
+            Debug.Log("soy el jugador " + gameObject.tag+" y he pidado la hierba");
+            m_enHierba = true;
+            OnpisandoHierba?.Invoke(true);
         }
 
         if (collision.attachedRigidbody.gameObject.layer == m_EffectorLayer)
         {
             Debug.Log("estoy bajo un effector");
-            m_underEffector = true;
-           
+            m_underEffector = true;     
         }
-
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (collision.attachedRigidbody.gameObject.layer == m_DangerLayer)
         {
-             //Debug.Log("Parada corutina");
-             StopCoroutine(m_pokemonHierba);
+            Debug.Log("soy el jugador " + gameObject.tag + " y he salido de la hierba");
+            m_enHierba = false;
+            OnpisandoHierba?.Invoke(false);
+            
         }
 
         if (collision.attachedRigidbody.gameObject.layer == m_EffectorLayer)
@@ -159,28 +157,23 @@ public class JugadorController : MonoBehaviour
             m_underEffector = false;
         }
     }
-
-    
-
-    IEnumerator posiblePokemonHierba()
+    public void CombatStart()
     {
-        while (true) {
-            //Debug.Log("Puede que te ataque un pokemon");
-            int m_random=Random.Range(0, 101);
-            if (m_random > 85)
-            {
-                Debug.Log("Te ataca un pokemon");
-                ChangeState(SwitchMachinesStates.BATTLE);
-
-            }
-            else
-            {
-                Debug.Log("No te ataca un pokemon");
-
-            }
-            yield return new WaitForSeconds(5);
-        }
+        m_Ultimaposicion.Raise(transform.position);
+        ChangeState(SwitchMachinesStates.BATTLE);  
     }
 
-
+    public void cargarUltimaPosicion(Vector3 v1, Vector3 v2)
+    {
+        if (gameObject.CompareTag("Player1"))
+        {
+            transform.position = v1;
+        }
+        else
+        {
+            transform.position = v2;
+        }
+     
+    }
+   
 }
