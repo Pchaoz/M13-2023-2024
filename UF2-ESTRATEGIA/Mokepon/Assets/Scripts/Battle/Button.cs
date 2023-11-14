@@ -5,14 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class Button : MonoBehaviour
 {
-    GameManager m_gameManager;
+   GameManager m_gameManager;
     private void Awake()
     {
-        m_gameManager = GameManager.Instance;
+     m_gameManager = GameManager.Instance;
     }
 
     public void activarCambio()
     {
-        m_gameManager.SalirEscenaCombate();
+       m_gameManager.SalirEscenaCombate();
     }
 }

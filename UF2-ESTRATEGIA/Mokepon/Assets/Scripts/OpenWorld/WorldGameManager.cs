@@ -4,23 +4,21 @@ using UnityEngine;
 
 public class WorldGameManager : MonoBehaviour
 {
+    private IEnumerator m_pokemonHierba;
+    [SerializeField]
+    GameEventBoolean m_comienzoCombate;
     [SerializeField]
     JugadorController m_jugador1;
     [SerializeField]
     JugadorController m_jugador2;
-    private IEnumerator m_pokemonHierba;
-    bool m_enHierba;
-    bool m_enCombate;
-    [SerializeField]
-    GameEventBoolean m_comienzoCombate;
+    int m_jugadoresTocandoHierba;
 
     private void Awake()
     {
         m_pokemonHierba = posiblePokemonHierba();
-        m_enHierba = false;
         m_jugador1.OnpisandoHierba += JugadorHierba;
         m_jugador2.OnpisandoHierba += JugadorHierba;
-        m_enCombate = false;
+        m_jugadoresTocandoHierba = 0;
     }
     private void OnDisable()
     {
@@ -28,42 +26,36 @@ public class WorldGameManager : MonoBehaviour
         m_jugador2.OnpisandoHierba -= JugadorHierba;
     }
 
-
-
     public void JugadorHierba(bool b)
     {
         if (b)
         {
-            if (!m_enHierba &&(m_jugador2.m_enHierba|| m_jugador1.m_enHierba))
+            if (m_jugadoresTocandoHierba ==0)
             {
+                m_jugadoresTocandoHierba++;
                 StartCoroutine(m_pokemonHierba);
-                m_enHierba = true;
             }
         }
         else
         {
-            if (m_enHierba && (!m_jugador2.m_enHierba || !m_jugador1.m_enHierba))
+            m_jugadoresTocandoHierba--;
+            if (m_jugadoresTocandoHierba == 0)
             {
                 StopCoroutine(m_pokemonHierba);
-                m_enHierba = false;
-            }
-               
-        }
-       
+            }               
+        }      
     }
 
 
     IEnumerator posiblePokemonHierba()
     {
-        while (!m_enCombate)
+        while (true)
         {
-           
             int m_random = UnityEngine.Random.Range(0, 101);
             Debug.Log("Puede que te ataque un pokemon" + m_random);
             if (m_random > 65)
             {
                 m_comienzoCombate.Raise(true);
-                m_enCombate = true;
                 break;
             }
             else

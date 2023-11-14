@@ -10,6 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c859b1789a2f004a8eb60791918e856, type: 3}
-  m_Name: Posicion2
+  m_Name: Jugador1
   m_EditorClassIdentifier: 
-  posicion: {x: 0, y: 0, z: 0}
+  m_name: Jugador1
+  m_posicionFinal: {x: 0, y: 0, z: 0}
+  m_mokeponActivo: {fileID: 0}

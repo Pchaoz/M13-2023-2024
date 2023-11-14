@@ -18,6 +18,7 @@ public class JugadorController : MonoBehaviour
     private InputAction m_MovementAction;
     [SerializeField]
     private int m_Speed=30;
+    float maxSpeed = 5.0f;
     private Rigidbody2D m_Rigidbody;
     private int m_DangerLayer=0;
     private int m_EffectorLayer = 0;
@@ -25,7 +26,7 @@ public class JugadorController : MonoBehaviour
     public Action<Boolean> OnpisandoHierba;
     public bool m_enHierba;
     [SerializeField]
-    private PosicionesInfo m_position;
+    JugadorInfo m_jugadorInfo;
 
     private enum SwitchMachinesStates { NONE, IDLE, WALK, BATTLE };
     [SerializeField]
@@ -53,8 +54,9 @@ public class JugadorController : MonoBehaviour
 
                 break;
             case SwitchMachinesStates.BATTLE:
+                
                 m_Rigidbody.velocity = Vector2.zero;
-
+                
                 break;
         }
 
@@ -75,15 +77,16 @@ public class JugadorController : MonoBehaviour
 
                 break;
             case SwitchMachinesStates.WALK:
-                if (m_Rigidbody.velocity.x < 1 && m_Rigidbody.velocity.x > -1 && m_Rigidbody.velocity.y < 1 && m_Rigidbody.velocity.y > -1)
-                {
-                    m_Rigidbody.AddForce(m_MovementAction.ReadValue<Vector2>() * m_Speed);
-                }
+               m_Rigidbody.AddForce(m_MovementAction.ReadValue<Vector2>() * m_Speed);
+                Vector2 clampedVelocity = Vector2.ClampMagnitude(m_Rigidbody.velocity, maxSpeed);
+                m_Rigidbody.velocity = clampedVelocity;
 
                 if (m_MovementAction.ReadValue<Vector2>() == new Vector2(0, 0))
                     ChangeState(SwitchMachinesStates.IDLE);
                 break;
             case SwitchMachinesStates.BATTLE:
+                m_jugadorInfo.m_posicionFinal = this.transform.position;
+                Debug.Log($"{name}: Te ataca un pokemon {m_jugadorInfo.m_posicionFinal}");
                 break;
         }
     }
@@ -137,7 +140,6 @@ public class JugadorController : MonoBehaviour
             Debug.Log("estoy bajo un effector");
             m_underEffector = true;     
         }
-
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -158,16 +160,14 @@ public class JugadorController : MonoBehaviour
     }
     public void CombatStart()
     {
-        m_position.posicion = transform.position;
-        Debug.Log($"{name}: Te ataca un pokemon {m_position.posicion}");
-        ChangeState(SwitchMachinesStates.BATTLE);
+        ChangeState(SwitchMachinesStates.BATTLE);  
     }
 
     public void cargarUltimaPosicion()
     {
-        Debug.Log($"{name}: Mi posicion {m_position.posicion}");
-        transform.position = m_position.posicion;
+       Debug.Log($"{name}: Mi posicion {m_jugadorInfo.m_posicionFinal}");
+       transform.position = m_jugadorInfo.m_posicionFinal;
     }
 
-
+   
 }

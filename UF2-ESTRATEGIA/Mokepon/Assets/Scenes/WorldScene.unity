@@ -479,7 +479,7 @@ MonoBehaviour:
   m_InputAsset: {fileID: -944628639613478452, guid: 7d7305708e828eb4190a8a8853a6e9a9, type: 3}
   m_Speed: 10
   m_enHierba: 0
-  m_position: {fileID: 11400000, guid: 45a8fe83147fb5b40a11adf68868538f, type: 2}
+  m_jugadorInfo: {fileID: 11400000, guid: ac8e8d457d839be4187021cb2716a203, type: 2}
   m_CurrentState: 0
 --- !u!61 &794199847
 BoxCollider2D:
@@ -1966,9 +1966,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f38ea0b4aa22c5e4a98d0e210036bf96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_comienzoCombate: {fileID: 11400000, guid: 8f2c327c0b233bf48a6a30b1c1a84445, type: 2}
   m_jugador1: {fileID: 2038409296}
   m_jugador2: {fileID: 794199846}
-  m_comienzoCombate: {fileID: 11400000, guid: 8f2c327c0b233bf48a6a30b1c1a84445, type: 2}
 --- !u!4 &1711532378
 Transform:
   m_ObjectHideFlags: 0
@@ -2160,7 +2160,7 @@ MonoBehaviour:
   m_InputAsset: {fileID: -944628639613478452, guid: 7d7305708e828eb4190a8a8853a6e9a9, type: 3}
   m_Speed: 10
   m_enHierba: 0
-  m_position: {fileID: 11400000, guid: 2e4f4c136e30dd64ea50d5da5c65bb69, type: 2}
+  m_jugadorInfo: {fileID: 11400000, guid: 344d62c86da30814e97d0d226455feee, type: 2}
   m_CurrentState: 0
 --- !u!114 &2038409297
 MonoBehaviour:
