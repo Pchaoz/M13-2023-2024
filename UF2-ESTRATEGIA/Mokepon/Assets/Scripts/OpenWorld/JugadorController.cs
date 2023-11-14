@@ -26,7 +26,7 @@ public class JugadorController : MonoBehaviour
     public Action<Boolean> OnpisandoHierba;
     public bool m_enHierba;
     [SerializeField]
-    JugadorInfo m_jugadorInfo;
+    GameEventVector3 m_Ultimaposicion;
 
     private enum SwitchMachinesStates { NONE, IDLE, WALK, BATTLE };
     [SerializeField]
@@ -85,8 +85,7 @@ public class JugadorController : MonoBehaviour
                     ChangeState(SwitchMachinesStates.IDLE);
                 break;
             case SwitchMachinesStates.BATTLE:
-                m_jugadorInfo.m_posicionFinal = this.transform.position;
-                Debug.Log($"{name}: Te ataca un pokemon {m_jugadorInfo.m_posicionFinal}");
+              
                 break;
         }
     }
@@ -160,14 +159,21 @@ public class JugadorController : MonoBehaviour
     }
     public void CombatStart()
     {
+        m_Ultimaposicion.Raise(transform.position);
         ChangeState(SwitchMachinesStates.BATTLE);  
     }
 
-    public void cargarUltimaPosicion()
+    public void cargarUltimaPosicion(Vector3 v1, Vector3 v2)
     {
-       Debug.Log($"{name}: Mi posicion {m_jugadorInfo.m_posicionFinal}");
-       transform.position = m_jugadorInfo.m_posicionFinal;
+        if (gameObject.CompareTag("Player1"))
+        {
+            transform.position = v1;
+        }
+        else
+        {
+            transform.position = v2;
+        }
+     
     }
-
    
 }

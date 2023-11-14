@@ -479,7 +479,7 @@ MonoBehaviour:
   m_InputAsset: {fileID: -944628639613478452, guid: 7d7305708e828eb4190a8a8853a6e9a9, type: 3}
   m_Speed: 10
   m_enHierba: 0
-  m_jugadorInfo: {fileID: 11400000, guid: ac8e8d457d839be4187021cb2716a203, type: 2}
+  m_Ultimaposicion: {fileID: 11400000, guid: 86bf2276dac975141a6db1dee836bb52, type: 2}
   m_CurrentState: 0
 --- !u!61 &794199847
 BoxCollider2D:
@@ -657,17 +657,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 794199845}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 200a30cfb605c304482e0654afa3b484, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b64021d11716a84196ecdcf7a8aaa50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 9ea10a3181a39a349af502554dc7bd11, type: 2}
+  Event: {fileID: 11400000, guid: 76e7ce218681c724d86531916aacef24, type: 2}
   Response:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 794199846}
         m_TargetAssemblyTypeName: JugadorController, Assembly-CSharp
         m_MethodName: cargarUltimaPosicion
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -2160,7 +2160,7 @@ MonoBehaviour:
   m_InputAsset: {fileID: -944628639613478452, guid: 7d7305708e828eb4190a8a8853a6e9a9, type: 3}
   m_Speed: 10
   m_enHierba: 0
-  m_jugadorInfo: {fileID: 11400000, guid: 344d62c86da30814e97d0d226455feee, type: 2}
+  m_Ultimaposicion: {fileID: 11400000, guid: 5ee944ed32bf0a54db4e43c4881da2a9, type: 2}
   m_CurrentState: 0
 --- !u!114 &2038409297
 MonoBehaviour:
@@ -2199,17 +2199,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 2038409291}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 200a30cfb605c304482e0654afa3b484, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b64021d11716a84196ecdcf7a8aaa50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: 9ea10a3181a39a349af502554dc7bd11, type: 2}
+  Event: {fileID: 11400000, guid: 76e7ce218681c724d86531916aacef24, type: 2}
   Response:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2038409296}
         m_TargetAssemblyTypeName: JugadorController, Assembly-CSharp
         m_MethodName: cargarUltimaPosicion
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -3019,6 +3019,8 @@ GameObject:
   - component: {fileID: 2112053184}
   - component: {fileID: 2112053183}
   - component: {fileID: 2112053182}
+  - component: {fileID: 2112053186}
+  - component: {fileID: 2112053185}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3066,7 +3068,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dbc90bc85149b04dacebe2db024fbc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_vueltadeCombate: {fileID: 11400000, guid: 9ea10a3181a39a349af502554dc7bd11, type: 2}
+  m_vueltadeCombate: {fileID: 11400000, guid: 76e7ce218681c724d86531916aacef24, type: 2}
 --- !u!4 &2112053184
 Transform:
   m_ObjectHideFlags: 0
@@ -3082,6 +3084,62 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2112053185
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2112053181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f80eff3186b1224f81de7558fe5ffbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 86bf2276dac975141a6db1dee836bb52, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2112053183}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: setpos2
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2112053186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2112053181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f80eff3186b1224f81de7558fe5ffbc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 5ee944ed32bf0a54db4e43c4881da2a9, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2112053183}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: setpos1
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2135571585
 GameObject:
   m_ObjectHideFlags: 0
