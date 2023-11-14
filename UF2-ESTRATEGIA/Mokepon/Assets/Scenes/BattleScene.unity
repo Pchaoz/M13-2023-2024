@@ -517,7 +517,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1366200106}
         m_TargetAssemblyTypeName: Button, Assembly-CSharp
-        m_MethodName: VolverOpenWorld
+        m_MethodName: activarCambio
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

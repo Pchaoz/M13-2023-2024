@@ -70,27 +70,10 @@
                     "action": "WorldActions",
                     "isComposite": false,
                     "isPartOfComposite": true
-                }
-            ]
-        },
-        {
-            "name": "OpenWorld2",
-            "id": "ee1362d4-7f47-4824-8d0f-6d0a75f344ab",
-            "actions": [
+                },
                 {
-                    "name": "WorldActions",
-                    "type": "Value",
-                    "id": "b14b2ff1-ba21-4eb8-92c5-f4cf43f8b55c",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": true
-                }
-            ],
-            "bindings": [
-                {
-                    "name": "MovimientoMapa",
-                    "id": "3e772cb7-320f-421a-aaa7-1126791a3f5f",
+                    "name": "2D Vector",
+                    "id": "3bdb58b2-7ddd-4883-bdac-bc9049f7755e",
                     "path": "2DVector",
                     "interactions": "",
                     "processors": "",
@@ -101,44 +84,44 @@
                 },
                 {
                     "name": "up",
-                    "id": "5d27a82c-d928-4ac4-87cf-6d10dbb7187a",
+                    "id": "ba4090f4-4552-437d-b8e7-e190cc02d94c",
                     "path": "<Keyboard>/upArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Jugador1",
+                    "groups": "Jugador2",
                     "action": "WorldActions",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "down",
-                    "id": "55d1079a-e978-4272-a778-b4638c0175ed",
+                    "id": "ada61510-5360-4f0c-ac8d-701868fa1b50",
                     "path": "<Keyboard>/downArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Jugador1",
+                    "groups": "Jugador2",
                     "action": "WorldActions",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "left",
-                    "id": "459eb0d3-1cfc-427b-866d-e6502223bf29",
+                    "id": "7d26412f-472c-4fd0-a043-e2b37b4b33fb",
                     "path": "<Keyboard>/leftArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Jugador1",
+                    "groups": "Jugador2",
                     "action": "WorldActions",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
                     "name": "right",
-                    "id": "3ba040b3-40a7-4a2e-9a0f-d0f2ab6ac26c",
+                    "id": "b4733620-5554-4dc0-bcaa-b9be525996c4",
                     "path": "<Keyboard>/rightArrow",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Jugador1",
+                    "groups": "Jugador2",
                     "action": "WorldActions",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -150,6 +133,11 @@
         {
             "name": "Jugador1",
             "bindingGroup": "Jugador1",
+            "devices": []
+        },
+        {
+            "name": "Jugador2",
+            "bindingGroup": "Jugador2",
             "devices": []
         }
     ]

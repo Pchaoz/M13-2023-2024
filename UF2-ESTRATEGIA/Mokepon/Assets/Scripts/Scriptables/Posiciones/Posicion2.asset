@@ -9,6 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83005f4153c3cf9439876ad1a8be6993, type: 3}
-  m_Name: ExitCombat
+  m_Script: {fileID: 11500000, guid: 6c859b1789a2f004a8eb60791918e856, type: 3}
+  m_Name: Posicion2
   m_EditorClassIdentifier: 
+  posicion: {x: 0, y: 0, z: 0}

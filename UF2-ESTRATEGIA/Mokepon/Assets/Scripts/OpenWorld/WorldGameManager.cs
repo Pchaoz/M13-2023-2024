@@ -64,13 +64,13 @@ public class WorldGameManager : MonoBehaviour
             {
                 m_comienzoCombate.Raise(true);
                 m_enCombate = true;
-
+                break;
             }
             else
             {
                 Debug.Log("No te ataca un pokemon");
             }
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(1);
         }
     }
 

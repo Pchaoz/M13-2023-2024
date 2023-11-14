@@ -23,8 +23,9 @@ public class JugadorController : MonoBehaviour
     private int m_EffectorLayer = 0;
     private bool m_underEffector;
     public Action<Boolean> OnpisandoHierba;
-    public Action<Vector2> Onultimapocion;
     public bool m_enHierba;
+    [SerializeField]
+    private PosicionesInfo m_position;
 
     private enum SwitchMachinesStates { NONE, IDLE, WALK, BATTLE };
     [SerializeField]
@@ -83,7 +84,6 @@ public class JugadorController : MonoBehaviour
                     ChangeState(SwitchMachinesStates.IDLE);
                 break;
             case SwitchMachinesStates.BATTLE:
-                Debug.Log("Estoy en combate");
                 break;
         }
     }
@@ -92,30 +92,19 @@ public class JugadorController : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("Jugador Awake");
 
-       
+        m_Rigidbody = GetComponent<Rigidbody2D>();
+
+        m_Input = Instantiate(m_InputAsset);
 
         if (gameObject.CompareTag("Player1"))
-        {
-            m_Input = Instantiate(m_InputAsset);
-            m_MovementAction = m_Input.FindActionMap("OpenWorld").FindAction("WorldActions");
-            m_Input.FindActionMap("OpenWorld").Enable();
-            m_Rigidbody = GetComponent<Rigidbody2D>();      
-            m_Input.FindActionMap("OpenWorld").FindAction("WorldActions");
-           
-
-        }
+            m_Input.bindingMask = InputBinding.MaskByGroup("Jugador1");
         else
-        {
-            m_Input = Instantiate(m_InputAsset);
-            m_MovementAction = m_Input.FindActionMap("OpenWorld2").FindAction("WorldActions");
-            m_Input.FindActionMap("OpenWorld2").Enable();
-            m_Rigidbody = GetComponent<Rigidbody2D>();
-            m_Input.FindActionMap("OpenWorld2").FindAction("WorldActions");
+            m_Input.bindingMask = InputBinding.MaskByGroup("Jugador2");
 
-        }
-
-
+        m_MovementAction = m_Input.FindActionMap("OpenWorld").FindAction("WorldActions");
+        m_Input.FindActionMap("OpenWorld").Enable();
     }
 
     // Start is called before the first frame update
@@ -141,8 +130,6 @@ public class JugadorController : MonoBehaviour
             Debug.Log("soy el jugador " + gameObject.tag+" y he pidado la hierba");
             m_enHierba = true;
             OnpisandoHierba?.Invoke(true);
-            
-
         }
 
         if (collision.attachedRigidbody.gameObject.layer == m_EffectorLayer)
@@ -171,8 +158,15 @@ public class JugadorController : MonoBehaviour
     }
     public void CombatStart()
     {
-        Debug.Log("Te ataca un pokemon");
+        m_position.posicion = transform.position;
+        Debug.Log($"{name}: Te ataca un pokemon {m_position.posicion}");
         ChangeState(SwitchMachinesStates.BATTLE);
+    }
+
+    public void cargarUltimaPosicion()
+    {
+        Debug.Log($"{name}: Mi posicion {m_position.posicion}");
+        transform.position = m_position.posicion;
     }
 
 

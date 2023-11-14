@@ -5,11 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class Button : MonoBehaviour
 {
-
-    public void VolverOpenWorld()
+    GameManager m_gameManager;
+    private void Awake()
     {
-        SceneManager.LoadScene("WorldScene");
-
+        m_gameManager = GameManager.Instance;
     }
 
+    public void activarCambio()
+    {
+        m_gameManager.SalirEscenaCombate();
+    }
 }
