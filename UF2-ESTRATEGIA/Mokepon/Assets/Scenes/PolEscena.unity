@@ -185,6 +185,8 @@ GameObject:
   - component: {fileID: 299887233}
   - component: {fileID: 299887232}
   - component: {fileID: 299887234}
+  - component: {fileID: 299887236}
+  - component: {fileID: 299887235}
   m_Layer: 0
   m_Name: gameManager
   m_TagString: Untagged
@@ -239,6 +241,50 @@ MonoBehaviour:
   m_MokeponJ1: {fileID: 828833519}
   m_MokeponJ2: {fileID: 624905123}
   m_MokeponIA: {fileID: 495832897}
+--- !u!114 &299887235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299887231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e5faf4b0a9362e479bdf6845fe9340e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 0ae67919584225b41a85fffcfe9efbc4, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &299887236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299887231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e5faf4b0a9362e479bdf6845fe9340e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 9a115e640e717e9468f20eaa70a1f182, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 299887234}
+        m_TargetAssemblyTypeName: CombatStateMachine, Assembly-CSharp
+        m_MethodName: OnSelectedAction
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &318697203
 GameObject:
   m_ObjectHideFlags: 0
