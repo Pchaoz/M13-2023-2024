@@ -8,7 +8,7 @@ public class Attack
     public int damage;
     public int pp;
     public Types type;
-    public States state;
+    public MokeStates state;
 
     public Attack(AttackInfo info)
     {

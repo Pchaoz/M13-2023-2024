@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,9 +10,10 @@ public class Mokepon : MonoBehaviour
     //STATES
 
     [SerializeField]
-    private States m_CurrentState;
+    private MokeStates m_CurrentState;
+    public MokeStates States { get { return m_CurrentState; } }
 
-    private void ChangeState(States newState)
+    private void ChangeState(MokeStates newState)
     {
         //Debug.Log(newState);
 
@@ -27,28 +29,28 @@ public class Mokepon : MonoBehaviour
     {
         switch (m_CurrentState)
         {
-            case States.NONE:
+            case MokeStates.NONE:
 
                 break;
-            case States.SLEEP:
+            case MokeStates.SLEEP:
 
                 break;
-            case States.DEFEATED:
+            case MokeStates.DEFEATED:
 
                 break;
         }
     }
-    private void InitState(States currentState)
+    private void InitState(MokeStates currentState)
     {
         m_CurrentState = currentState;
 
         switch (m_CurrentState)
         {
-            case States.NONE:
+            case MokeStates.NONE:
                 break;
-            case States.SLEEP:
+            case MokeStates.SLEEP:
                 break;
-            case States.DEFEATED:
+            case MokeStates.DEFEATED:
                 break;
         }
     }
@@ -56,11 +58,11 @@ public class Mokepon : MonoBehaviour
     {
         switch (m_CurrentState)
         {
-            case States.NONE:
+            case MokeStates.NONE:
                 break;
-            case States.SLEEP:
+            case MokeStates.SLEEP:
                 break;
-            case States.DEFEATED:
+            case MokeStates.DEFEATED:
                 break;
         }
     }
@@ -73,14 +75,13 @@ public class Mokepon : MonoBehaviour
 
     //MOKEPON STATS
     [Header("POKEMON STATS")]
+    private int m_MaxHp;
     [SerializeField]
     private int m_Hp;
     [SerializeField]
     public List<Attack> m_AttacksList;
     [SerializeField]
     private Types m_Type;
-    [SerializeField]
-    public States m_State;
 
     private void Awake()
     {
@@ -91,15 +92,17 @@ public class Mokepon : MonoBehaviour
     {
         m_AttacksList = new List<Attack>();
         m_Mokename = info.mokename;
-        m_Hp = info.hp;
+        m_MaxHp = info.hp;
         m_Type = info.type;
-        m_State = info.state;
+        InitState(info.state);
 
         foreach (AttackInfo atk in info.attackList)
         {
             Attack at = new Attack(atk);
             m_AttacksList.Add(at);
         }
+
+        m_Hp = m_MaxHp;
     }
 
     public void ReciveAttack(Attack atk)
@@ -163,12 +166,20 @@ public class Mokepon : MonoBehaviour
         }
         Debug.Log("HE RECIBIDO EL ATAQUE " + atk.moveName + " Y AHORA MI VIDA ES MENOR. MI VIDA ES: " + m_Hp);
         if (m_Hp < 1)
-            m_State = States.DEFEATED;
+            ChangeState(MokeStates.DEFEATED);
     }
 
     private void GetHurt(int dmg)
     {
         Debug.Log("TENGO " + m_Hp + " DE VIDA Y RECIBO " + dmg + " DE DAÑO");
         m_Hp -= dmg;
+    }
+
+    public void Rest()
+    {
+        m_Hp += 5;
+
+        if (m_Hp > m_MaxHp)
+            m_Hp = m_MaxHp;
     }
 }

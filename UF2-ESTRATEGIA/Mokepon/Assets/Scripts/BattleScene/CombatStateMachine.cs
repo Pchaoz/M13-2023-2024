@@ -31,32 +31,52 @@ public class CombatStateMachine : MonoBehaviour
                 break;
             case States.PLAYER1:
 
-                if (m_OptionSelected == -1)
+                if (m_ActionOption == -1)
                     return; //DOES NOTHING
 
-                if (m_OptionSelected == 0)
-                    Debug.Log("ATACA"); //THEN SELECTS ATTACK
+                if (m_ActionOption == 0)
+                {
+                    //THEN SELECTS ATTACK 
+                    if (m_MokeponJ1.States != MokeStates.SLEEP && m_MokeponJ1.States != MokeStates.DEFEATED)
+                    {
+                        //THEN HE CAN ATTACK 
+                        Debug.Log("ATACA");
+                        if (m_AttackOption == -1)
+                            return;
+                        if (m_AttackOption == 0 || m_AttackOption == 1)
+                        {
+                            m_MokeponIA.GetComponent<Mokepon>().ReciveAttack(m_MokeponJ1.GetComponent<Mokepon>().m_AttacksList[m_ActionOption]);
 
-                if (m_OptionSelected == 1)
-                        Debug.Log("DESCANSA"); //THEN REST
+                        }
+                    }
+                    m_ActionOption = -1;
+                    m_AttackOption = -1;
+                    ChangeState(States.PLAYER2);
+                }
 
+                if (m_ActionOption == 1)
+                {
+                    Debug.Log("DESCANSA"); //THEN REST
+                    m_MokeponJ1.Rest();
+                    ChangeState(States.PLAYER2);
+                }
                 break;
             case States.PLAYER2:
 
-                if (m_OptionSelected == -1)
+                if (m_ActionOption == -1)
                     return; //DOES NOTHING
 
-                if (m_OptionSelected == 0)
+                if (m_ActionOption == 0)
                     Debug.Log("ATACA"); //THEN ATTAKCS
 
-                if (m_OptionSelected == 1)
+                if (m_ActionOption == 1)
                     Debug.Log("DESCANSA"); //THEN REST
 
                 break;
             case States.IA:
-                if (m_MokeponIA.m_State == global::States.SLEEP || m_MokeponIA.m_State == global::States.DEFEATED)
+                if (m_MokeponIA.States == MokeStates.SLEEP || m_MokeponIA.States == MokeStates.DEFEATED)
                 {
-                    Debug.Log("The mokepon is: " + m_MokeponJ1.m_State + " he cant fight");
+                    Debug.Log("The mokepon is: " + m_MokeponJ1.States + " he cant fight");
                     ChangeState(States.PLAYER1); //DOES NOTHING, THE POKEMON CANT FIGHT
                 }
 
@@ -128,12 +148,14 @@ public class CombatStateMachine : MonoBehaviour
     private Mokepon m_MokeponIA;
 
     //OPTIONS
-    private int m_OptionSelected;
+    private int m_ActionOption;
+    private int m_AttackOption;
 
     private void Awake()
     {
         InitState(States.IDLE);
-        m_OptionSelected = -1;
+        m_ActionOption = -1;
+        m_AttackOption = -1;
         SetUpBattle();
     }
 
@@ -155,5 +177,16 @@ public class CombatStateMachine : MonoBehaviour
 
         ChangeState(States.PLAYER1); //EMPIEZA EL J1
     }
+
+    public void OnSelectedAction(int opt)
+    {
+        m_ActionOption = opt;
+    }
+    public void OnSelectedAttack(int opt)
+    {
+        m_AttackOption = opt;
+    }
+
+
 
 }
