@@ -18,12 +18,17 @@ public class BattleUIManager : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI m_AtkBtn2;
 
+    [SerializeField]
+    GameEventInt m_ActionChoise;
+    [SerializeField]
+    GameEventInt m_AttackChoise;
+
     /*
     [SerializeField]
     GameObject m_AtkBtn3;
     [SerializeField]                   // DE MOMENTO SOLO TENDRAN DOS ATAQUES
     GameObject m_AtkBtn4;
-    */ 
+    */
 
     public void SwitchToAtk ()
     {
@@ -37,9 +42,13 @@ public class BattleUIManager : MonoBehaviour
         m_AtkBtn2.SetText(atk[1].moveName);
     }
 
-    public void SendOption(int opt)
+    public void SendAction(int opt)
     {
-        ///
+        m_ActionChoise.Raise(opt);
+    }
+    public void SendAttack(int opt)
+    {
+        m_AttackChoise.Raise(opt);
     }
 
 }

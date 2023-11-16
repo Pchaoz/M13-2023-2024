@@ -170,8 +170,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AtkMenu: {fileID: 926000538}
   m_ActionMenu: {fileID: 1331603368}
-  m_AtkBtn1: {fileID: 495534793}
-  m_AtkBtn2: {fileID: 902413271}
+  m_AtkBtn1: {fileID: 1734528904}
+  m_AtkBtn2: {fileID: 473955664}
+  m_ActionChoise: {fileID: 11400000, guid: 9a115e640e717e9468f20eaa70a1f182, type: 2}
+  m_AttackChoise: {fileID: 11400000, guid: 0ae67919584225b41a85fffcfe9efbc4, type: 2}
 --- !u!1 &299887231
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,7 +624,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 495534796}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 72653739}
+        m_TargetAssemblyTypeName: BattleUIManager, Assembly-CSharp
+        m_MethodName: SendAttack
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &495534796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -950,7 +964,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 902413274}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 72653739}
+        m_TargetAssemblyTypeName: BattleUIManager, Assembly-CSharp
+        m_MethodName: SendAttack
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &902413274
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1435,13 +1461,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 72653737}
+      - m_Target: {fileID: 72653739}
         m_TargetAssemblyTypeName: BattleUIManager, Assembly-CSharp
-        m_MethodName: 
-        m_Mode: 1
+        m_MethodName: SendAction
+        m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1861,7 +1887,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1749278225}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 72653739}
+        m_TargetAssemblyTypeName: BattleUIManager, Assembly-CSharp
+        m_MethodName: SendAction
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 1
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1749278225
 MonoBehaviour:
   m_ObjectHideFlags: 0
