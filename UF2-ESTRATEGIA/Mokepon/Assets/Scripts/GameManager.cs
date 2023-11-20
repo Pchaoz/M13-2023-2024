@@ -10,15 +10,14 @@ public class GameManager : MonoBehaviour
     private static GameManager m_Instance;
     [SerializeField]
     private GameEventVector32 m_vueltadeCombate;
+    [SerializeField]
+    private GameEventMokepon2 m_tusMokepon;
     Vector3 m_ultimaPoscionJugador1;
     Vector3 m_ultimaPoscionJugador2;
     [SerializeField]
     Mokepon m_mokeponJugador1;
     [SerializeField]
     Mokepon m_mokeponJugador2;
-
-
-
 
 
     public static GameManager Instance
@@ -45,22 +44,31 @@ public class GameManager : MonoBehaviour
 
     public void IniciarEscenaCombate()
     {
-        StartCoroutine(transicion("BattleScene"));
+        StartCoroutine(transicion("PolEscena"));
     }
 
 
     public void SalirEscenaCombate()
     {
-        SceneManager.sceneLoaded += OnVueltaOverworld;
+        SceneManager.sceneLoaded += OnCambioEscena;
         StartCoroutine(transicion("WorldScene"));
-
     }
 
-    void OnVueltaOverworld(Scene scene, LoadSceneMode mode)
+    void OnCambioEscena(Scene scene, LoadSceneMode mode)
     {
-        Debug.Log("GM de tornada");
-        m_vueltadeCombate.Raise(m_ultimaPoscionJugador1, m_ultimaPoscionJugador2);
-        SceneManager.sceneLoaded -= OnVueltaOverworld;
+        if(scene.name== "WorldScene")
+        {
+            Debug.Log("GM de tornada");
+            m_vueltadeCombate.Raise(m_ultimaPoscionJugador1, m_ultimaPoscionJugador2);
+            SceneManager.sceneLoaded -= OnCambioEscena;
+        }
+        if(scene.name== "PolEscena")
+        {
+            m_tusMokepon.Raise(m_mokeponJugador1, m_mokeponJugador2);
+            SceneManager.sceneLoaded -= OnCambioEscena;
+
+        }
+
     }
 
     IEnumerator transicion(string siguienteEscena)
@@ -69,6 +77,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(siguienteEscena);
     }
 
+    //Guardado de información de los jugadores en los cambios de escenas
     public void setpos1(Vector3 v31)
     {
         m_ultimaPoscionJugador1 = v31;
