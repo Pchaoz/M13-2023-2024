@@ -12,6 +12,13 @@ public class GameManager : MonoBehaviour
     private GameEventVector32 m_vueltadeCombate;
     Vector3 m_ultimaPoscionJugador1;
     Vector3 m_ultimaPoscionJugador2;
+    [SerializeField]
+    Mokepon m_mokeponJugador1;
+    [SerializeField]
+    Mokepon m_mokeponJugador2;
+
+
+
 
 
     public static GameManager Instance
@@ -52,7 +59,7 @@ public class GameManager : MonoBehaviour
     void OnVueltaOverworld(Scene scene, LoadSceneMode mode)
     {
         Debug.Log("GM de tornada");
-        m_vueltadeCombate.Raise(m_ultimaPoscionJugador1,m_ultimaPoscionJugador2);
+        m_vueltadeCombate.Raise(m_ultimaPoscionJugador1, m_ultimaPoscionJugador2);
         SceneManager.sceneLoaded -= OnVueltaOverworld;
     }
 
@@ -71,5 +78,16 @@ public class GameManager : MonoBehaviour
         m_ultimaPoscionJugador2 = v31;
     }
 
+    public void mokepon1(Mokepon m)
+    {
+        m_mokeponJugador1 = m;
+    }
+    public void mokepon2(Mokepon m)
+    {
+        m_mokeponJugador2 = m;
+
+    }
+
 
 }
+

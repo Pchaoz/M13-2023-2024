@@ -17,8 +17,8 @@ public class JugadorController : MonoBehaviour
     private InputActionAsset m_Input;
     private InputAction m_MovementAction;
     [SerializeField]
-    private int m_Speed=30;
-    float maxSpeed = 5.0f;
+    private int m_Speed=20;
+    float maxSpeed = 3.0f;
     private Rigidbody2D m_Rigidbody;
     private int m_DangerLayer=0;
     private int m_EffectorLayer = 0;
@@ -26,7 +26,12 @@ public class JugadorController : MonoBehaviour
     public Action<Boolean> OnpisandoHierba;
     public bool m_enHierba;
     [SerializeField]
-    GameEventVector3 m_Ultimaposicion;
+    GameEventVector3 m_ultimaposicion;
+    [SerializeField]
+    Mokepon m_mokepon;
+    [SerializeField]
+    GameEventMokepon m_misMokepon;
+
 
     private enum SwitchMachinesStates { NONE, IDLE, WALK, BATTLE };
     [SerializeField]
@@ -159,7 +164,8 @@ public class JugadorController : MonoBehaviour
     }
     public void CombatStart()
     {
-        m_Ultimaposicion.Raise(transform.position);
+        m_ultimaposicion.Raise(transform.position);
+        m_misMokepon.Raise(m_mokepon);
         ChangeState(SwitchMachinesStates.BATTLE);  
     }
 

@@ -485,7 +485,9 @@ MonoBehaviour:
   m_InputAsset: {fileID: -944628639613478452, guid: 7d7305708e828eb4190a8a8853a6e9a9, type: 3}
   m_Speed: 10
   m_enHierba: 0
-  m_Ultimaposicion: {fileID: 11400000, guid: 86bf2276dac975141a6db1dee836bb52, type: 2}
+  m_ultimaposicion: {fileID: 11400000, guid: 86bf2276dac975141a6db1dee836bb52, type: 2}
+  m_mokepon: {fileID: 7553960332924745625, guid: 8d53161f5542c8842952fc343bc0d30f, type: 3}
+  m_misMokepon: {fileID: 11400000, guid: 334a55511b0960a4f9c72b5874cf907f, type: 2}
   m_CurrentState: 0
 --- !u!61 &794199847
 BoxCollider2D:
@@ -1975,6 +1977,8 @@ MonoBehaviour:
   m_comienzoCombate: {fileID: 11400000, guid: 8f2c327c0b233bf48a6a30b1c1a84445, type: 2}
   m_jugador1: {fileID: 2038409296}
   m_jugador2: {fileID: 794199846}
+  m_jugadoresTocandoHierba: 0
+  m_Atacable: 0
 --- !u!4 &1711532378
 Transform:
   m_ObjectHideFlags: 0
@@ -2166,7 +2170,9 @@ MonoBehaviour:
   m_InputAsset: {fileID: -944628639613478452, guid: 7d7305708e828eb4190a8a8853a6e9a9, type: 3}
   m_Speed: 10
   m_enHierba: 0
-  m_Ultimaposicion: {fileID: 11400000, guid: 5ee944ed32bf0a54db4e43c4881da2a9, type: 2}
+  m_ultimaposicion: {fileID: 11400000, guid: 5ee944ed32bf0a54db4e43c4881da2a9, type: 2}
+  m_mokepon: {fileID: 7553960332924745625, guid: b68eec87cf9cac14d8a6594d21c75b9e, type: 3}
+  m_misMokepon: {fileID: 11400000, guid: d056afc9231c82f4fb6d29353ac92fb6, type: 2}
   m_CurrentState: 0
 --- !u!114 &2038409297
 MonoBehaviour:
@@ -3027,6 +3033,8 @@ GameObject:
   - component: {fileID: 2112053182}
   - component: {fileID: 2112053186}
   - component: {fileID: 2112053185}
+  - component: {fileID: 2112053188}
+  - component: {fileID: 2112053187}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -3075,6 +3083,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_vueltadeCombate: {fileID: 11400000, guid: 76e7ce218681c724d86531916aacef24, type: 2}
+  m_mokeponJugador1: {fileID: 0}
+  m_mokeponJugador2: {fileID: 0}
 --- !u!4 &2112053184
 Transform:
   m_ObjectHideFlags: 0
@@ -3137,6 +3147,62 @@ MonoBehaviour:
       - m_Target: {fileID: 2112053183}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: setpos1
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2112053187
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2112053181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38083398e42697d408c4428827bfa70b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 334a55511b0960a4f9c72b5874cf907f, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2112053183}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: mokepon2
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2112053188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2112053181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38083398e42697d408c4428827bfa70b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: d056afc9231c82f4fb6d29353ac92fb6, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2112053183}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: mokepon1
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

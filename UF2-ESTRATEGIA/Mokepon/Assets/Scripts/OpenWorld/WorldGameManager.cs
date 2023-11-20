@@ -7,12 +7,15 @@ public class WorldGameManager : MonoBehaviour
 {
     private IEnumerator m_pokemonHierba;
     private IEnumerator m_segundosInvulnerable;
+    [SerializeField]
     GameEventBoolean m_comienzoCombate;
     [SerializeField]
     JugadorController m_jugador1;
     [SerializeField]
     JugadorController m_jugador2;
+    [SerializeField]
     int m_jugadoresTocandoHierba;
+    [SerializeField]
     bool m_Atacable;
 
     private void Awake()
