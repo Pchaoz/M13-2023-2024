@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum States
+public enum MokeStates
 {
     NONE, DEFEATED, SLEEP
 }

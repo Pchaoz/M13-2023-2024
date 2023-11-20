@@ -9,5 +9,5 @@ public class AttackInfo : ScriptableObject
     public int damage;
     public int pp;
     public Types type;
-    public States state;
+    public MokeStates state;
 }

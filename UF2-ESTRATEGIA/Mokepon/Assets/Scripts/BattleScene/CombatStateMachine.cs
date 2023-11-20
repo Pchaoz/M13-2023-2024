@@ -30,32 +30,92 @@ public class CombatStateMachine : MonoBehaviour
             case States.IDLE:
                 break;
             case States.PLAYER1:
-                Attack atk1 = m_MokeponJ1.m_AttacksList[Random.Range(0, m_MokeponJ1.m_AttacksList.Count)];
-                if (atk1.pp > 0)
+
+                if (m_ActionOption == -1)
+                    return; //DOES NOTHING
+
+                if (m_ActionOption == 0)
                 {
-                    atk1.pp--;
-                    m_MokeponIA.GetComponent<Mokepon>().ReciveAttack(atk1);
+                    //THEN SELECTS ATTACK 
+                    if (m_MokeponJ1.States != MokeStates.SLEEP && m_MokeponJ1.States != MokeStates.DEFEATED)
+                    {
+                        //THEN HE CAN ATTACK 
+                        Debug.Log("ATACA");
+                        if (m_AttackOption == -1)
+                            return;
+                        if (m_AttackOption == 0 || m_AttackOption == 1)
+                        {
+                            m_MokeponIA.GetComponent<Mokepon>().ReciveAttack(m_MokeponJ1.GetComponent<Mokepon>().m_AttacksList[m_ActionOption]);
+
+                        }
+                    }
+                    m_ActionOption = -1; //RESET THE CHOISE
+                    m_AttackOption = -1; //RESET THE CHOISE
                     ChangeState(States.PLAYER2);
                 }
-                Debug.Log("NO ATACO A ESTE ATAQUE NO LE QUEDAN PP (JUGADOR 1)");
+
+                if (m_ActionOption == 1)
+                {
+                    Debug.Log("DESCANSA"); //THEN REST
+                    m_MokeponJ1.Rest();
+                    m_ActionOption = -1; //RESET THE CHOISE
+                    m_AttackOption = -1; //RESET THE CHOISE
+                    ChangeState(States.PLAYER2);
+                }
                 break;
             case States.PLAYER2:
-                Attack atk2 = m_MokeponJ2.m_AttacksList[Random.Range(0, m_MokeponJ2.m_AttacksList.Count)];
-                if (atk2.pp > 0)
+
+                if (m_ActionOption == -1)
+                    return; //DOES NOTHING
+
+                if (m_ActionOption == 0)
                 {
-                    atk2.pp--;
-                    m_MokeponIA.GetComponent<Mokepon>().ReciveAttack(atk2);
+                    //THEN SELECTS ATTACK 
+                    if (m_MokeponJ2.States != MokeStates.SLEEP && m_MokeponJ2.States != MokeStates.DEFEATED)
+                    {
+                        //THEN HE CAN ATTACK 
+                        Debug.Log("ATACA");
+                        if (m_AttackOption == -1)
+                            return;
+                        if (m_AttackOption == 0 || m_AttackOption == 1)
+                        {
+                            m_MokeponIA.GetComponent<Mokepon>().ReciveAttack(m_MokeponJ2.GetComponent<Mokepon>().m_AttacksList[m_ActionOption]);
+
+                        }
+                    }
+                    m_ActionOption = -1; //RESET THE CHOISE
+                    m_AttackOption = -1; //RESET THE CHOISE
                     ChangeState(States.IA);
                 }
-                Debug.Log("NO ATACO A ESTE ATAQUE NO LE QUEDAN PP (JUGADOR 2)");
+
+                if (m_ActionOption == 1)
+                {
+                    Debug.Log("DESCANSA"); //THEN REST
+                    m_MokeponJ1.Rest();
+                    m_ActionOption = -1; //RESET THE CHOISE
+                    m_AttackOption = -1; //RESET THE CHOISE
+                    ChangeState(States.IA);
+                }
                 break;
             case States.IA:
+                if (m_MokeponIA.States == MokeStates.SLEEP || m_MokeponIA.States == MokeStates.DEFEATED)
+                {
+                    Debug.Log("The mokepon is: " + m_MokeponJ1.States + " he cant fight");
+                    ChangeState(States.PLAYER1); //DOES NOTHING, THE POKEMON CANT FIGHT
+                }
+
                 Attack atkIA = m_MokeponIA.m_AttacksList[Random.Range(0, m_MokeponIA.m_AttacksList.Count)];
                 if (atkIA.pp > 0)
                 {
                     atkIA.pp--;
-                    m_MokeponJ1.GetComponent<Mokepon>().ReciveAttack(atkIA);
-                    m_MokeponJ2.GetComponent<Mokepon>().ReciveAttack(atkIA);
+
+                    int PlayerToAtk = Random.Range(0, 2); //ATACKS RANDOMLY ONE OF THE PLAYERS
+
+                    if (PlayerToAtk == 0)
+                        m_MokeponJ1.GetComponent<Mokepon>().ReciveAttack(atkIA);
+                    else
+                        m_MokeponJ2.GetComponent<Mokepon>().ReciveAttack(atkIA);
+
                     ChangeState(States.PLAYER1);
                 }
                 Debug.Log("NO ATACO A ESTE ATAQUE NO LE QUEDAN PP (IA)");
@@ -111,9 +171,15 @@ public class CombatStateMachine : MonoBehaviour
     [SerializeField]
     private Mokepon m_MokeponIA;
 
-    private void Start()
+    //OPTIONS
+    private int m_ActionOption;
+    private int m_AttackOption;
+
+    private void Awake()
     {
         InitState(States.IDLE);
+        m_ActionOption = -1;
+        m_AttackOption = -1;
         SetUpBattle();
     }
 
@@ -135,5 +201,16 @@ public class CombatStateMachine : MonoBehaviour
 
         ChangeState(States.PLAYER1); //EMPIEZA EL J1
     }
+
+    public void OnSelectedAction(int opt)
+    {
+        m_ActionOption = opt;
+    }
+    public void OnSelectedAttack(int opt)
+    {
+        m_AttackOption = opt;
+    }
+
+
 
 }
