@@ -27,8 +27,7 @@ public class BattleUIManager : MonoBehaviour
     GameEventInt m_ActionChoise;
     [SerializeField]
     GameEventInt m_AttackChoise;
-    [SerializeField]
-    GameEventInt m_AttacksInfo;
+    
 
     [Header("OTHER OPTIONS")]
     bool isAvaible; //THIS MAKES AVAIBLE TO SELECT
@@ -68,12 +67,21 @@ public class BattleUIManager : MonoBehaviour
 
     public void SendAction(int opt)
     {
-        m_ActionChoise.Raise(opt);  
+        if (isAvaible)
+            m_ActionChoise.Raise(opt);  
 
     }
     public void SendAttack(int opt)
     {
-        m_AttackChoise.Raise(opt);
+        if (isAvaible)
+        {
+            m_AttackChoise.Raise(opt);
+            SwitchToAction();
+        }
     }
 
+    public void CanAttack(bool canAttack)
+    {
+        isAvaible = canAttack;
+    }
 }

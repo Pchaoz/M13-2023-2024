@@ -16,5 +16,6 @@ MonoBehaviour:
   hp: 35
   attackList:
   - {fileID: 11400000, guid: 1aeb536039f61fd428f0d507c21ad0ef, type: 2}
-  type: Agua
-  state: NONE
+  - {fileID: 11400000, guid: 4590f219b2cc9f644ae63a4529c9f57f, type: 2}
+  type: 0
+  state: 0

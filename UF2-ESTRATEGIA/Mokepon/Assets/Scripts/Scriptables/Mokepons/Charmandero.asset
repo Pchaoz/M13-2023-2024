@@ -16,5 +16,6 @@ MonoBehaviour:
   hp: 50
   attackList:
   - {fileID: 11400000, guid: 19123235e9e12bc44b4d7eec01b2b693, type: 2}
-  type: Fuego
-  state: NONE
+  - {fileID: 11400000, guid: 5faf72c391e41dd4f81e65a79eb6a8b1, type: 2}
+  type: 0
+  state: 0

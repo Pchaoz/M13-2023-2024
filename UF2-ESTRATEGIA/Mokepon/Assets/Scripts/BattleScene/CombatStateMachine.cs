@@ -36,16 +36,24 @@ public class CombatStateMachine : MonoBehaviour
 
                 if (m_ActionOption == 0)
                 {
+                    //SENDS TO THE UI THE ATTACK LIST TO CHANGE THE DEFAULT BTN TEXT
+                    m_AttacksInfo.Raise(m_MokeponJ1.m_AttacksList);
+                    m_ActionOption = 2;
+                    return;
+                }
+                if (m_ActionOption == 2)
+                {
                     //THEN SELECTS ATTACK 
                     if (m_MokeponJ1.States != MokeStates.SLEEP && m_MokeponJ1.States != MokeStates.DEFEATED)
                     {
                         //THEN HE CAN ATTACK 
-                        Debug.Log("ATACA");
+                        //Debug.Log("ATACA");
                         if (m_AttackOption == -1)
                             return;
                         if (m_AttackOption == 0 || m_AttackOption == 1)
                         {
-                            m_MokeponIA.GetComponent<Mokepon>().ReciveAttack(m_MokeponJ1.GetComponent<Mokepon>().m_AttacksList[m_ActionOption]);
+                            Debug.Log(m_ActionOption);
+                            m_MokeponIA.GetComponent<Mokepon>().ReciveAttack(m_MokeponJ1.GetComponent<Mokepon>().m_AttacksList[m_AttackOption]);
 
                         }
                     }
@@ -70,16 +78,18 @@ public class CombatStateMachine : MonoBehaviour
 
                 if (m_ActionOption == 0)
                 {
+                    //SENDS TO THE UI THE ATTACK LIST TO CHANGE THE DEFAULT BTN TEXT
+                    m_AttacksInfo.Raise(m_MokeponJ2.m_AttacksList);
                     //THEN SELECTS ATTACK 
                     if (m_MokeponJ2.States != MokeStates.SLEEP && m_MokeponJ2.States != MokeStates.DEFEATED)
                     {
                         //THEN HE CAN ATTACK 
-                        Debug.Log("ATACA");
+                        //Debug.Log("ATACA");
                         if (m_AttackOption == -1)
                             return;
                         if (m_AttackOption == 0 || m_AttackOption == 1)
                         {
-                            m_MokeponIA.GetComponent<Mokepon>().ReciveAttack(m_MokeponJ2.GetComponent<Mokepon>().m_AttacksList[m_ActionOption]);
+                            m_MokeponIA.GetComponent<Mokepon>().ReciveAttack(m_MokeponJ2.GetComponent<Mokepon>().m_AttacksList[m_AttackOption]);
 
                         }
                     }
@@ -98,6 +108,7 @@ public class CombatStateMachine : MonoBehaviour
                 }
                 break;
             case States.IA:
+
                 if (m_MokeponIA.States == MokeStates.SLEEP || m_MokeponIA.States == MokeStates.DEFEATED)
                 {
                     Debug.Log("The mokepon is: " + m_MokeponJ1.States + " he cant fight");
@@ -131,10 +142,12 @@ public class CombatStateMachine : MonoBehaviour
             case States.IDLE:
                 break;
             case States.PLAYER1:
+                IsPlayerTurn.Raise(true); //PERMITS THE PLAYER DO THINGS
                 break;
             case States.PLAYER2:
                 break;
             case States.IA:
+                IsPlayerTurn.Raise(false); //PREVENTS THE PLAYER FROM DOING ACTIONS
                 break;
         }
     }
@@ -157,21 +170,26 @@ public class CombatStateMachine : MonoBehaviour
 
     //LOGIC
 
-    //COSAS
+    [Header("ALL MOKEPON LIST FOR THE IA")]
     [SerializeField]
     List<MokeponInfo> m_PossibleMoke;
 
-    //JUGADORES
     [SerializeField]
     private Mokepon m_MokeponJ1;
     [SerializeField]
     private Mokepon m_MokeponJ2;
 
-    //IA
+    [Header("IA OPTIONS")]
     [SerializeField]
     private Mokepon m_MokeponIA;
 
-    //OPTIONS
+
+    [Header("EVENTS")]
+    [SerializeField]
+    GameEventAtkList m_AttacksInfo;
+    [SerializeField]
+    GameEventBoolean IsPlayerTurn;
+
     private int m_ActionOption;
     private int m_AttackOption;
 
@@ -208,9 +226,8 @@ public class CombatStateMachine : MonoBehaviour
     }
     public void OnSelectedAttack(int opt)
     {
+        Debug.Log(opt);
         m_AttackOption = opt;
     }
-
-
 
 }
