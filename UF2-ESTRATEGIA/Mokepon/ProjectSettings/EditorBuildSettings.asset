@@ -11,4 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BattleScene.unity
     guid: 2314b9ca40f202e4abe86d75b6dbb91c
+  - enabled: 1
+    path: Assets/Scenes/PolEscena.unity
+    guid: 7be8526ae4a2079429e15ccc7ee4d5e6
   m_configObjects: {}

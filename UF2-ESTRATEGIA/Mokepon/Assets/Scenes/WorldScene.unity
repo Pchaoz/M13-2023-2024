@@ -3083,6 +3083,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_vueltadeCombate: {fileID: 11400000, guid: 76e7ce218681c724d86531916aacef24, type: 2}
+  m_tusMokepon: {fileID: 11400000, guid: b2d20f1b725c6f542a6bb904a260d9b4, type: 2}
   m_mokeponJugador1: {fileID: 0}
   m_mokeponJugador2: {fileID: 0}
 --- !u!4 &2112053184

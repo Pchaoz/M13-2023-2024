@@ -161,7 +161,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36bc45233a8c0dc4daabd5abe13c7cc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Name: 
+  m_CurrentState: 0
+  m_Mokename: 
+  m_mokeponInfo: {fileID: 11400000, guid: 04dd89e65617b6a4f88790202d3527bc, type: 2}
   m_Hp: 100
   m_Type: 1
-  m_State: 2

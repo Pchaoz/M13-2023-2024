@@ -44,7 +44,8 @@ public class GameManager : MonoBehaviour
 
     public void IniciarEscenaCombate()
     {
-        StartCoroutine(transicion("PolEscena"));
+        SceneManager.sceneLoaded += OnCambioEscena;
+        StartCoroutine(transicion("BattleScene"));
     }
 
 
@@ -58,12 +59,13 @@ public class GameManager : MonoBehaviour
     {
         if(scene.name== "WorldScene")
         {
-            Debug.Log("GM de tornada");
+            Debug.Log("Estoy en el world");
             m_vueltadeCombate.Raise(m_ultimaPoscionJugador1, m_ultimaPoscionJugador2);
             SceneManager.sceneLoaded -= OnCambioEscena;
         }
-        if(scene.name== "PolEscena")
+        if(scene.name== "BattleScene")
         {
+            Debug.Log("Estoy en el combate");
             m_tusMokepon.Raise(m_mokeponJugador1, m_mokeponJugador2);
             SceneManager.sceneLoaded -= OnCambioEscena;
 

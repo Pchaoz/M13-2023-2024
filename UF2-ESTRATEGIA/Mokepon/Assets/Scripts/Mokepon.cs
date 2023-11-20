@@ -72,6 +72,8 @@ public class Mokepon : MonoBehaviour
 
     [SerializeField]
     private string m_Mokename;
+    [SerializeField]
+    private MokeponInfo m_mokeponInfo;
 
     //MOKEPON STATS
     [Header("POKEMON STATS")]
@@ -86,6 +88,10 @@ public class Mokepon : MonoBehaviour
     private void Awake()
     {
         UpdateState();
+        if(m_mokeponInfo != null)
+        {
+            LoadInfo(m_mokeponInfo);
+        }
     }
 
     public void LoadInfo(MokeponInfo info)
