@@ -178,6 +178,7 @@ public class Mokepon : MonoBehaviour
     public void Rest()
     {
         m_Hp += 5;
+        Debug.Log("TENGO " + m_Hp + " DE VIDA, DESCANSO Y TENGO " + m_Hp + " DE VIDA");
 
         if (m_Hp > m_MaxHp)
             m_Hp = m_MaxHp;

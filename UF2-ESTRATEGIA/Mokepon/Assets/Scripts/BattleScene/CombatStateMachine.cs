@@ -49,8 +49,8 @@ public class CombatStateMachine : MonoBehaviour
 
                         }
                     }
-                    m_ActionOption = -1;
-                    m_AttackOption = -1;
+                    m_ActionOption = -1; //RESET THE CHOISE
+                    m_AttackOption = -1; //RESET THE CHOISE
                     ChangeState(States.PLAYER2);
                 }
 
@@ -58,6 +58,8 @@ public class CombatStateMachine : MonoBehaviour
                 {
                     Debug.Log("DESCANSA"); //THEN REST
                     m_MokeponJ1.Rest();
+                    m_ActionOption = -1; //RESET THE CHOISE
+                    m_AttackOption = -1; //RESET THE CHOISE
                     ChangeState(States.PLAYER2);
                 }
                 break;
@@ -67,11 +69,33 @@ public class CombatStateMachine : MonoBehaviour
                     return; //DOES NOTHING
 
                 if (m_ActionOption == 0)
-                    Debug.Log("ATACA"); //THEN ATTAKCS
+                {
+                    //THEN SELECTS ATTACK 
+                    if (m_MokeponJ2.States != MokeStates.SLEEP && m_MokeponJ2.States != MokeStates.DEFEATED)
+                    {
+                        //THEN HE CAN ATTACK 
+                        Debug.Log("ATACA");
+                        if (m_AttackOption == -1)
+                            return;
+                        if (m_AttackOption == 0 || m_AttackOption == 1)
+                        {
+                            m_MokeponIA.GetComponent<Mokepon>().ReciveAttack(m_MokeponJ2.GetComponent<Mokepon>().m_AttacksList[m_ActionOption]);
+
+                        }
+                    }
+                    m_ActionOption = -1; //RESET THE CHOISE
+                    m_AttackOption = -1; //RESET THE CHOISE
+                    ChangeState(States.IA);
+                }
 
                 if (m_ActionOption == 1)
+                {
                     Debug.Log("DESCANSA"); //THEN REST
-
+                    m_MokeponJ1.Rest();
+                    m_ActionOption = -1; //RESET THE CHOISE
+                    m_AttackOption = -1; //RESET THE CHOISE
+                    ChangeState(States.IA);
+                }
                 break;
             case States.IA:
                 if (m_MokeponIA.States == MokeStates.SLEEP || m_MokeponIA.States == MokeStates.DEFEATED)
