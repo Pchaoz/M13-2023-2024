@@ -8,8 +8,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
+using static SaveData;
 
-public class JugadorController : MonoBehaviour
+public class JugadorController : MonoBehaviour, ISaveableObject
 {
 
     [SerializeField]
@@ -178,5 +179,14 @@ public class JugadorController : MonoBehaviour
         }
      
     }
-   
+
+    public PlayerData Save()
+    {
+        return new SaveData.PlayerData(transform.position);
+    }
+
+    public void Load(PlayerData _playerData)
+    {
+        transform.position = _playerData.position;
+    }
 }
