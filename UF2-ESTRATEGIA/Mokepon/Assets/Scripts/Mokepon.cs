@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Mokepon : MonoBehaviour
 {
@@ -84,6 +85,10 @@ public class Mokepon : MonoBehaviour
     public List<Attack> m_AttacksList;
     [SerializeField]
     private Types m_Type;
+    [SerializeField]
+    private int m_experiencia;
+    [SerializeField]
+    private int m_level;
 
     private void Awake()
     {
@@ -189,4 +194,30 @@ public class Mokepon : MonoBehaviour
         if (m_Hp > m_MaxHp)
             m_Hp = m_MaxHp;
     }
+
+    public void recompensaGanarCombate(int n)
+    {
+        m_experiencia += n;
+        while(m_experiencia >= 100)
+        {
+            m_experiencia -= 100;
+            m_level++;
+            Debug.Log("El Mokepon " + name + "sube de nivel a " + m_level);
+            subirNivel();
+        }
+
+
+    }
+
+    public void subirNivel()
+    {
+       int VidaExtra = Random.Range(5, 11);
+       Debug.Log("El Mokepon " + name + "consigue más vida, recibe un total de: " + VidaExtra+". Ahora su vida total es de "+VidaExtra+ m_MaxHp);
+       m_MaxHp += VidaExtra;
+       m_Hp = m_MaxHp;
+
+    }
+
+
+
 }
