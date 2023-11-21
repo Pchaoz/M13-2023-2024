@@ -12,6 +12,26 @@ public class BattleUIManager : MonoBehaviour
     [SerializeField]
     GameObject m_ActionMenu;
 
+    [Header("INTERFACE HP, STATE AND NAME TEXT")]
+    [SerializeField]
+    TextMeshProUGUI m_P1_Name;
+    [SerializeField]
+    TextMeshProUGUI m_P1_HP;
+    [SerializeField]
+    TextMeshProUGUI m_P1_State;
+    [SerializeField]
+    TextMeshProUGUI m_P2_Name;
+    [SerializeField]
+    TextMeshProUGUI m_P2_HP;
+    [SerializeField]
+    TextMeshProUGUI m_P2_State;
+    [SerializeField]
+    TextMeshProUGUI m_IA_Name;
+    [SerializeField]
+    TextMeshProUGUI m_IA_HP;
+    [SerializeField]
+    TextMeshProUGUI m_IA_State;
+
     [Header("ATTACK MENU BUTTONS")]
     [SerializeField]
     TextMeshProUGUI m_AtkBtn1_Name;
@@ -83,5 +103,34 @@ public class BattleUIManager : MonoBehaviour
     public void CanAttack(bool canAttack)
     {
         isAvaible = canAttack;
+    }
+
+    public void OnHpChange(string player, int hp)
+    {
+        if (player.Equals("IA"))
+            m_IA_HP.SetText("HP: " + hp);
+        if (player.Equals("J1"))
+            m_P1_HP.SetText("HP: " + hp);
+        if (player.Equals("J2"))
+            m_P2_HP.SetText("HP: " + hp);
+    }
+    public void OnStateChange(string player, MokeStates state)
+    {
+        if (player.Equals("IA"))
+            m_P1_State.SetText("STATE: " + state.ToString());
+        if (player.Equals("J1"))
+            m_P2_State.SetText("STATE: " + state.ToString());
+        if (player.Equals("J2"))
+            m_IA_State.SetText("STATE: " + state.ToString());
+    }
+
+    public void SetUpBattle(List<Mokepon> mokeList)
+    {
+        m_P1_Name.SetText(mokeList[0].GetMokename + " (J1)");
+        m_P1_HP.SetText("HP: " + mokeList[0].GetMaxHp);
+        m_P2_Name.SetText(mokeList[1].GetMokename + " (J2)");
+        m_P2_HP.SetText("HP: " + mokeList[1].GetMaxHp);
+        m_IA_Name.SetText(mokeList[2].GetMokename + " (IA)");
+        m_IA_HP.SetText("HP: " + mokeList[2].GetMaxHp);
     }
 }

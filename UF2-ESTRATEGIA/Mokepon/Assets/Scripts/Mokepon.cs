@@ -71,17 +71,23 @@ public class Mokepon : MonoBehaviour
 
 
     [SerializeField]
-    private string m_Mokename;
+    public string m_Mokename;
+    public string GetMokename => m_Mokename;
 
     //MOKEPON STATS
     [Header("POKEMON STATS")]
     private int m_MaxHp;
+    public int GetMaxHp => m_MaxHp;
     [SerializeField]
     private int m_Hp;
+    public int GetHp => m_Hp;
     [SerializeField]
     public List<Attack> m_AttacksList;
     [SerializeField]
     private Types m_Type;
+
+    [SerializeField]
+    private StringIntEvent OnHpChange;
 
     private void Awake()
     {
@@ -105,14 +111,14 @@ public class Mokepon : MonoBehaviour
         m_Hp = m_MaxHp;
     }
 
-    public void ReciveAttack(Attack atk)
+    public void ReciveAttack(Attack atk, String player)
     {
         int dmg;
         if (atk.type == m_Type)
         {
             //SOLO RECIBE EL DA�O BASE NO HAY MULTIPLICADOR PORQUE ES DEL MISMO TIPO
             dmg = atk.damage;
-            GetHurt(dmg);
+            GetHurt(dmg, player);
         }
         else if (atk.type == Types.Fuego)
         {
@@ -120,13 +126,13 @@ public class Mokepon : MonoBehaviour
             {
                 //Da�o por 2?
                 dmg = atk.damage / 2;
-                GetHurt(dmg);
+                GetHurt(dmg, player);
             }
             else if (m_Type == Types.Agua)
             {
                 //Da�o reducido? entre 2?
                 dmg = atk.damage * 2;
-                GetHurt(dmg);
+                GetHurt(dmg, player);
             }
         }
         else if (atk.type == Types.Hierba)
@@ -135,13 +141,13 @@ public class Mokepon : MonoBehaviour
             {
                 //Da�o por 2?
                 dmg = atk.damage * 2;
-                GetHurt(dmg);
+                GetHurt(dmg, player);
             }
             else if (m_Type == Types.Agua)
             {
                 //Da�o reducido? entre 2?
                 dmg = atk.damage / 2;
-                GetHurt(dmg);
+                GetHurt(dmg, player);
             }
         }
         else if (atk.type == Types.Agua)
@@ -150,37 +156,38 @@ public class Mokepon : MonoBehaviour
             {
                 //Da�o por 2?
                 dmg = atk.damage * 2;
-                GetHurt(dmg);
+                GetHurt(dmg, player);
             }
             else if (m_Type == Types.Fuego)
             {
                 //Da�o reducido? entre 2?
                 dmg = atk.damage / 2;
-                GetHurt(dmg);
+                GetHurt(dmg, player);
             }
         }
         else
         {
             dmg = atk.damage;
-            GetHurt(dmg);
+            GetHurt(dmg, player);
         }
-        Debug.Log("HE RECIBIDO EL ATAQUE " + atk.moveName + " Y AHORA MI VIDA ES MENOR. MI VIDA ES: " + m_Hp);
+
         if (m_Hp < 1)
             ChangeState(MokeStates.DEFEATED);
     }
 
-    private void GetHurt(int dmg)
+    private void GetHurt(int dmg, string player)
     {
-        Debug.Log("TENGO " + m_Hp + " DE VIDA Y RECIBO " + dmg + " DE DAÑO");
         m_Hp -= dmg;
+        OnHpChange.Raise(player, m_Hp); //AVISO DE QUE HE RECIBIDO EL DAÑO
     }
 
-    public void Rest()
+    public void Rest(string player)
     {
         m_Hp += 5;
-        Debug.Log("TENGO " + m_Hp + " DE VIDA, DESCANSO Y TENGO " + m_Hp + " DE VIDA");
-
         if (m_Hp > m_MaxHp)
             m_Hp = m_MaxHp;
+
+        Debug.Log("EL JUGADOR "  + player + " HA DESCANSADO Y TIENE " + m_Hp + " HP");
+        OnHpChange.Raise(player, m_Hp);
     }
 }

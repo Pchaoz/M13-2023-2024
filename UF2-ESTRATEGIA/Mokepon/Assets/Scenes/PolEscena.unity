@@ -452,8 +452,10 @@ GameObject:
   - component: {fileID: 72653739}
   - component: {fileID: 72653741}
   - component: {fileID: 72653740}
+  - component: {fileID: 72653742}
+  - component: {fileID: 72653743}
   m_Layer: 0
-  m_Name: UI
+  m_Name: UIManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -471,9 +473,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2064434835}
   - {fileID: 705417330}
-  m_Father: {fileID: 318697204}
+  m_Father: {fileID: 963046245}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &72653739
@@ -490,6 +491,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_AtkMenu: {fileID: 926000538}
   m_ActionMenu: {fileID: 1331603368}
+  m_P1_Name: {fileID: 353948106}
+  m_P1_HP: {fileID: 1290847923}
+  m_P1_State: {fileID: 692126540}
+  m_P2_Name: {fileID: 994321283}
+  m_P2_HP: {fileID: 1321452456}
+  m_P2_State: {fileID: 1001981561}
+  m_IA_Name: {fileID: 2028205992}
+  m_IA_HP: {fileID: 54949041}
+  m_IA_State: {fileID: 1128339649}
   m_AtkBtn1_Name: {fileID: 386814447}
   m_AtkBtn1_PP: {fileID: 1634674030}
   m_AtkBtn2_Name: {fileID: 950162966}
@@ -543,6 +553,62 @@ MonoBehaviour:
       - m_Target: {fileID: 72653739}
         m_TargetAssemblyTypeName: BattleUIManager, Assembly-CSharp
         m_MethodName: CanAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &72653742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72653737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69a6520d47fe49b45a1201688604e6df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: b4ef3f140f817bb4caad524f634b6ab8, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 72653739}
+        m_TargetAssemblyTypeName: BattleUIManager, Assembly-CSharp
+        m_MethodName: SetUpBattle
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &72653743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72653737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c07b35761c1f35a4fb696c267d6e3d7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 19fb1c7a313d22d478a566da9187f4dd, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 72653739}
+        m_TargetAssemblyTypeName: BattleUIManager, Assembly-CSharp
+        m_MethodName: OnHpChange
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -608,6 +674,7 @@ MonoBehaviour:
   m_MokeponIA: {fileID: 495832897}
   m_AttacksInfo: {fileID: 11400000, guid: 8da5783d985817e4cae39523acf94ece, type: 2}
   IsPlayerTurn: {fileID: 11400000, guid: f35d5c88d5227ec48912ec76128ba2d0, type: 2}
+  SetUpNames: {fileID: 11400000, guid: b4ef3f140f817bb4caad524f634b6ab8, type: 2}
 --- !u!114 &299887235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -692,7 +759,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 72653738}
+  - {fileID: 2064434835}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -788,7 +855,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1913,6 +1980,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 72653738}
   - {fileID: 299887233}
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -2009,7 +2077,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -3872,7 +3940,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -4006,7 +4074,7 @@ GameObject:
   - component: {fileID: 2064434837}
   - component: {fileID: 2064434836}
   m_Layer: 0
-  m_Name: Canvas
+  m_Name: BattleCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4027,7 +4095,7 @@ RectTransform:
   - {fileID: 21179908}
   - {fileID: 2059910683}
   - {fileID: 1280155325}
-  m_Father: {fileID: 72653738}
+  m_Father: {fileID: 318697204}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

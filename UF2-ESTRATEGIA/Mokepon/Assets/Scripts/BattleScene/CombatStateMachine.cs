@@ -7,7 +7,7 @@ public class CombatStateMachine : MonoBehaviour
     //STATE MACHINE STUFF
 
     //STATES
-    private enum States { NONE, IDLE, PLAYER1, PLAYER2, IA };
+    private enum States { NONE, IDLE, PLAYER1, PLAYER2, IA, WIN };
     [SerializeField]
     private States m_CurrentState;
 
@@ -51,11 +51,8 @@ public class CombatStateMachine : MonoBehaviour
                         if (m_AttackOption == -1)
                             return;
                         if (m_AttackOption == 0 || m_AttackOption == 1)
-                        {
-                            Debug.Log(m_ActionOption);
-                            m_MokeponIA.GetComponent<Mokepon>().ReciveAttack(m_MokeponJ1.GetComponent<Mokepon>().m_AttacksList[m_AttackOption]);
-
-                        }
+                            m_MokeponIA.GetComponent<Mokepon>().ReciveAttack(m_MokeponJ1.GetComponent<Mokepon>().m_AttacksList[m_AttackOption], "IA");
+                      
                     }
                     m_ActionOption = -1; //RESET THE CHOISE
                     m_AttackOption = -1; //RESET THE CHOISE
@@ -65,7 +62,7 @@ public class CombatStateMachine : MonoBehaviour
                 if (m_ActionOption == 1)
                 {
                     Debug.Log("DESCANSA"); //THEN REST
-                    m_MokeponJ1.Rest();
+                    m_MokeponJ1.Rest("J1");
                     m_ActionOption = -1; //RESET THE CHOISE
                     m_AttackOption = -1; //RESET THE CHOISE
                     ChangeState(States.PLAYER2);
@@ -89,7 +86,7 @@ public class CombatStateMachine : MonoBehaviour
                             return;
                         if (m_AttackOption == 0 || m_AttackOption == 1)
                         {
-                            m_MokeponIA.GetComponent<Mokepon>().ReciveAttack(m_MokeponJ2.GetComponent<Mokepon>().m_AttacksList[m_AttackOption]);
+                            m_MokeponIA.GetComponent<Mokepon>().ReciveAttack(m_MokeponJ2.GetComponent<Mokepon>().m_AttacksList[m_AttackOption], "IA");
 
                         }
                     }
@@ -101,7 +98,7 @@ public class CombatStateMachine : MonoBehaviour
                 if (m_ActionOption == 1)
                 {
                     Debug.Log("DESCANSA"); //THEN REST
-                    m_MokeponJ1.Rest();
+                    m_MokeponJ1.Rest("J2");
                     m_ActionOption = -1; //RESET THE CHOISE
                     m_AttackOption = -1; //RESET THE CHOISE
                     ChangeState(States.IA);
@@ -109,12 +106,19 @@ public class CombatStateMachine : MonoBehaviour
                 break;
             case States.IA:
 
-                if (m_MokeponIA.States == MokeStates.SLEEP || m_MokeponIA.States == MokeStates.DEFEATED)
+                if (m_MokeponIA.States == MokeStates.DEFEATED)
                 {
-                    Debug.Log("The mokepon is: " + m_MokeponJ1.States + " he cant fight");
+                    //TE LO HAS CARGADO GANAS EL COMBATE
+                }
+
+                if (m_MokeponIA.States == MokeStates.SLEEP)
+                {
+                    Debug.Log("MOKE IS SLEEPING, CANT FIGHT");
+                    m_MokeponIA.Rest("IA"); //THEN REST
                     ChangeState(States.PLAYER1); //DOES NOTHING, THE POKEMON CANT FIGHT
                 }
 
+                
                 Attack atkIA = m_MokeponIA.m_AttacksList[Random.Range(0, m_MokeponIA.m_AttacksList.Count)];
                 if (atkIA.pp > 0)
                 {
@@ -123,13 +127,17 @@ public class CombatStateMachine : MonoBehaviour
                     int PlayerToAtk = Random.Range(0, 2); //ATACKS RANDOMLY ONE OF THE PLAYERS
 
                     if (PlayerToAtk == 0)
-                        m_MokeponJ1.GetComponent<Mokepon>().ReciveAttack(atkIA);
+                        m_MokeponJ1.GetComponent<Mokepon>().ReciveAttack(atkIA, "J1");
                     else
-                        m_MokeponJ2.GetComponent<Mokepon>().ReciveAttack(atkIA);
+                        m_MokeponJ2.GetComponent<Mokepon>().ReciveAttack(atkIA, "J2");
 
                     ChangeState(States.PLAYER1);
+                    return;
                 }
                 Debug.Log("NO ATACO A ESTE ATAQUE NO LE QUEDAN PP (IA)");
+                break;
+
+            case States.WIN:
                 break;
         }
     }
@@ -149,6 +157,9 @@ public class CombatStateMachine : MonoBehaviour
             case States.IA:
                 IsPlayerTurn.Raise(false); //PREVENTS THE PLAYER FROM DOING ACTIONS
                 break;
+            case States.WIN:
+                IsPlayerTurn.Raise(false);
+                break;
         }
     }
     private void ExitState()
@@ -162,6 +173,8 @@ public class CombatStateMachine : MonoBehaviour
             case States.PLAYER2:
                 break;
             case States.IA:
+                break;
+            case States.WIN:
                 break;
         }
     }
@@ -186,9 +199,11 @@ public class CombatStateMachine : MonoBehaviour
 
     [Header("EVENTS")]
     [SerializeField]
-    GameEventAtkList m_AttacksInfo;
+    private GameEventAtkList m_AttacksInfo;
     [SerializeField]
-    GameEventBoolean IsPlayerTurn;
+    private GameEventBoolean IsPlayerTurn;
+    [SerializeField]
+    private GameEventMokeList BattleSetEvent;
 
     private int m_ActionOption;
     private int m_AttackOption;
@@ -217,6 +232,12 @@ public class CombatStateMachine : MonoBehaviour
         Moke = Random.Range(1, m_PossibleMoke.Count);
         m_MokeponJ2.LoadInfo(m_PossibleMoke[Moke]);
 
+        List<Mokepon> mokeSetUp = new List<Mokepon>();
+        mokeSetUp.Add(m_MokeponJ1);
+        mokeSetUp.Add(m_MokeponJ2);
+        mokeSetUp.Add(m_MokeponIA);
+
+        BattleSetEvent.Raise(mokeSetUp); //PONER LOS NOMBRES EN LA UI
         ChangeState(States.PLAYER1); //EMPIEZA EL J1
     }
 
@@ -226,8 +247,6 @@ public class CombatStateMachine : MonoBehaviour
     }
     public void OnSelectedAttack(int opt)
     {
-        Debug.Log(opt);
         m_AttackOption = opt;
     }
-
 }
