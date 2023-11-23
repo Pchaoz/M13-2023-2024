@@ -86,6 +86,9 @@ public class Mokepon : MonoBehaviour
     public List<Attack> m_AttacksList;
     [SerializeField]
     private Types m_Type;
+
+
+    //RAUL
     [SerializeField]
     private int m_experiencia;
     [SerializeField]
