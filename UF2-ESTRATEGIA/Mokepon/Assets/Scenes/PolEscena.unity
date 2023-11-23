@@ -452,8 +452,8 @@ GameObject:
   - component: {fileID: 72653739}
   - component: {fileID: 72653741}
   - component: {fileID: 72653740}
-  - component: {fileID: 72653742}
   - component: {fileID: 72653743}
+  - component: {fileID: 72653744}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: Untagged
@@ -562,34 +562,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &72653742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 72653737}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69a6520d47fe49b45a1201688604e6df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Event: {fileID: 11400000, guid: b4ef3f140f817bb4caad524f634b6ab8, type: 2}
-  Response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 72653739}
-        m_TargetAssemblyTypeName: BattleUIManager, Assembly-CSharp
-        m_MethodName: SetUpBattle
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &72653743
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -618,6 +590,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &72653744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 72653737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64b030a7a75c32e459ee3017add93e5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: c6ecfd2f8a90d1c428e29735fb7a92f7, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 72653739}
+        m_TargetAssemblyTypeName: BattleUIManager, Assembly-CSharp
+        m_MethodName: SetUpBattle
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &299887231
 GameObject:
   m_ObjectHideFlags: 0
@@ -630,6 +630,7 @@ GameObject:
   - component: {fileID: 299887234}
   - component: {fileID: 299887236}
   - component: {fileID: 299887235}
+  - component: {fileID: 299887237}
   m_Layer: 0
   m_Name: BattleManager
   m_TagString: Untagged
@@ -674,7 +675,7 @@ MonoBehaviour:
   m_MokeponIA: {fileID: 495832897}
   m_AttacksInfo: {fileID: 11400000, guid: 8da5783d985817e4cae39523acf94ece, type: 2}
   IsPlayerTurn: {fileID: 11400000, guid: f35d5c88d5227ec48912ec76128ba2d0, type: 2}
-  SetUpNames: {fileID: 11400000, guid: b4ef3f140f817bb4caad524f634b6ab8, type: 2}
+  BattleSetEvent: {fileID: 11400000, guid: c6ecfd2f8a90d1c428e29735fb7a92f7, type: 2}
 --- !u!114 &299887235
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -726,6 +727,34 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &299887237
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 299887231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98b2ea600921b62449c4719f6b9addfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: 65b9688c7cab6c045a76d03aae46a993, type: 2}
+  Response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 299887231}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
