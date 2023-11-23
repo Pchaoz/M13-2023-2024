@@ -33,7 +33,7 @@ public class JugadorController : MonoBehaviour
     GameEventMokepon m_misMokepon;
 
 
-    private enum SwitchMachinesStates { NONE, IDLE, WALK, BATTLE };
+    private enum SwitchMachinesStates { NONE, IDLE, WALK};
     [SerializeField]
     private SwitchMachinesStates m_CurrentState;
 
@@ -41,8 +41,13 @@ public class JugadorController : MonoBehaviour
     {
         if (newState == m_CurrentState)
             return;
-
+        ExitState();
         InitState(newState);
+    }
+
+    private void ExitState()
+    {
+       
     }
 
     private void InitState(SwitchMachinesStates currentState)
@@ -58,11 +63,7 @@ public class JugadorController : MonoBehaviour
             case SwitchMachinesStates.WALK:
 
                 break;
-            case SwitchMachinesStates.BATTLE:
-                
-                m_Rigidbody.velocity = Vector2.zero;
-                
-                break;
+            
         }
 
     }
@@ -88,9 +89,6 @@ public class JugadorController : MonoBehaviour
 
                 if (m_MovementAction.ReadValue<Vector2>() == new Vector2(0, 0))
                     ChangeState(SwitchMachinesStates.IDLE);
-                break;
-            case SwitchMachinesStates.BATTLE:
-              
                 break;
         }
     }
@@ -166,7 +164,6 @@ public class JugadorController : MonoBehaviour
     {
         m_ultimaposicion.Raise(transform.position);
         m_misMokepon.Raise(m_mokepon);
-        ChangeState(SwitchMachinesStates.BATTLE);  
     }
 
     public void cargarUltimaPosicion(Vector3 v1, Vector3 v2)
