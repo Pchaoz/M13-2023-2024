@@ -52,6 +52,7 @@ public class Mokepon : MonoBehaviour
             case MokeStates.SLEEP:
                 break;
             case MokeStates.DEFEATED:
+                Defeated();
                 break;
         }
     }
@@ -71,12 +72,15 @@ public class Mokepon : MonoBehaviour
     // ------------------------------------------------------------------------------------------ \\
 
 
-    [SerializeField]
-    public string m_Mokename;
+    //GETTER
     public string GetMokename => m_Mokename;
-
+    
     //MOKEPON STATS
     [Header("POKEMON STATS")]
+    [SerializeField]
+    private string m_Trainer;
+    [SerializeField]
+    public string m_Mokename;
     private int m_MaxHp;
     public int GetMaxHp => m_MaxHp;
     [SerializeField]
@@ -86,7 +90,13 @@ public class Mokepon : MonoBehaviour
     public List<Attack> m_AttacksList;
     [SerializeField]
     private Types m_Type;
+    [SerializeField]
+    private int m_StateTurns;
 
+    [SerializeField]
+    private StringIntEvent OnHpChange;
+    [SerializeField]
+    private GameEventString OnDefeated;
 
     //RAUL
     [SerializeField]
@@ -94,19 +104,8 @@ public class Mokepon : MonoBehaviour
     [SerializeField]
     private int m_level;
 
-    [SerializeField]
-    private StringIntEvent OnHpChange;
 
-    private void Awake()
-    {
-        UpdateState();
-        if(m_mokeponInfo != null)
-        {
-            LoadInfo(m_mokeponInfo);
-        }
-    }
-
-    public void LoadInfo(MokeponInfo info)
+    public void LoadInfo(MokeponInfo info, string trainer)
     {
         m_AttacksList = new List<Attack>();
         m_Mokename = info.mokename;
@@ -119,18 +118,18 @@ public class Mokepon : MonoBehaviour
             Attack at = new Attack(atk);
             m_AttacksList.Add(at);
         }
-
         m_Hp = m_MaxHp;
+        m_Trainer = trainer;
     }
 
-    public void ReciveAttack(Attack atk, String player)
+    public void ReciveAttack(Attack atk)
     {
         int dmg;
         if (atk.type == m_Type)
         {
             //SOLO RECIBE EL DA�O BASE NO HAY MULTIPLICADOR PORQUE ES DEL MISMO TIPO
             dmg = atk.damage;
-            GetHurt(dmg, player);
+            GetHurt(dmg);
         }
         else if (atk.type == Types.Fuego)
         {
@@ -138,13 +137,13 @@ public class Mokepon : MonoBehaviour
             {
                 //Da�o por 2?
                 dmg = atk.damage / 2;
-                GetHurt(dmg, player);
+                GetHurt(dmg);
             }
             else if (m_Type == Types.Agua)
             {
                 //Da�o reducido? entre 2?
                 dmg = atk.damage * 2;
-                GetHurt(dmg, player);
+                GetHurt(dmg);
             }
         }
         else if (atk.type == Types.Hierba)
@@ -153,13 +152,13 @@ public class Mokepon : MonoBehaviour
             {
                 //Da�o por 2?
                 dmg = atk.damage * 2;
-                GetHurt(dmg, player);
+                GetHurt(dmg);
             }
             else if (m_Type == Types.Agua)
             {
                 //Da�o reducido? entre 2?
                 dmg = atk.damage / 2;
-                GetHurt(dmg, player);
+                GetHurt(dmg);
             }
         }
         else if (atk.type == Types.Agua)
@@ -168,39 +167,44 @@ public class Mokepon : MonoBehaviour
             {
                 //Da�o por 2?
                 dmg = atk.damage * 2;
-                GetHurt(dmg, player);
+                GetHurt(dmg);
             }
             else if (m_Type == Types.Fuego)
             {
                 //Da�o reducido? entre 2?
                 dmg = atk.damage / 2;
-                GetHurt(dmg, player);
+                GetHurt(dmg);   
             }
         }
         else
         {
             dmg = atk.damage;
-            GetHurt(dmg, player);
+            GetHurt(dmg);
         }
 
         if (m_Hp < 1)
             ChangeState(MokeStates.DEFEATED);
     }
 
-    private void GetHurt(int dmg, string player)
+    private void GetHurt(int dmg)
     {
         m_Hp -= dmg;
-        OnHpChange.Raise(player, m_Hp); //AVISO DE QUE HE RECIBIDO EL DAÑO
+        OnHpChange.Raise(m_Trainer, m_Hp); //AVISO DE QUE HE RECIBIDO EL DAÑO
     }
 
-    public void Rest(string player)
+    private void Defeated()
     {
-        m_Hp += 5;
-        if (m_Hp > m_MaxHp)
-            m_Hp = m_MaxHp;
+        OnDefeated.Raise(m_Trainer);
+    }
 
-        Debug.Log("EL JUGADOR "  + player + " HA DESCANSADO Y TIENE " + m_Hp + " HP");
-        OnHpChange.Raise(player, m_Hp);
+    public void Rest()
+    {
+        m_Hp += 5; //DESCANSA Y RECUPERA 5 DE HP
+        if (m_Hp > m_MaxHp) //ESTO SIRVE PARA CONTROLAR QUE NO SE PASE DE LA VIDA BASE QUE TIENE
+            m_Hp = m_MaxHp; 
+
+        //Debug.Log("EL JUGADOR "  + player + " HA DESCANSADO Y TIENE " + m_Hp + " HP"); //DEBUG QUE LO DICE SIN MAS
+        OnHpChange.Raise(m_Trainer, m_Hp);
     }
 
     public void recompensaGanarCombate(int n)
@@ -213,19 +217,12 @@ public class Mokepon : MonoBehaviour
             Debug.Log("El Mokepon " + name + "sube de nivel a " + m_level);
             subirNivel();
         }
-
-
     }
-
     public void subirNivel()
     {
        int VidaExtra = Random.Range(5, 11);
        Debug.Log("El Mokepon " + name + "consigue más vida, recibe un total de: " + VidaExtra+". Ahora su vida total es de "+VidaExtra+ m_MaxHp);
        m_MaxHp += VidaExtra;
        m_Hp = m_MaxHp;
-
     }
-
-
-
 }
