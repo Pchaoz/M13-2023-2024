@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEditor.Timeline.Actions;
 using UnityEngine;
@@ -180,9 +181,38 @@ public class JugadorController : MonoBehaviour, ISaveableObject
      
     }
 
+    public void cargarInfoMokepon(MokeponInfo m1, MokeponInfo m2)
+    {
+
+        if (gameObject.CompareTag("Player1"))
+        {
+            
+            m_mokepon.LoadInfo(m1);
+        }
+        else
+        {
+            m_mokepon.LoadInfo(m2);
+        }
+
+    }
+
+    public void cargarMokepon(List<int>l1, List<int>l2)
+    {
+        if (gameObject.CompareTag("Player1"))
+        {
+            m_mokepon.cargarValoresGuardados(l1);
+        }
+        else
+        {
+            m_mokepon.cargarValoresGuardados(l1);
+        }
+        
+    }
+
     public PlayerData Save()
     {
-        return new SaveData.PlayerData(transform.position);
+        List<int> valoresMokepon = m_mokepon.guardarValores();
+        return new SaveData.PlayerData(transform.position, valoresMokepon);
     }
 
     public void Load(PlayerData _playerData)

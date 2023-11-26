@@ -10,10 +10,13 @@ public class SaveData
     public struct PlayerData
     {
         public Vector3 position;
+        public List<int> valoresMokepon;
 
-        public PlayerData(Vector3 _position)
+        public PlayerData(Vector3 _position, List<int> vmokpe)
         {
             position = _position;
+            valoresMokepon = vmokpe;
+
         }
     }
 

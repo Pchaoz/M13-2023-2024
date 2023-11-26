@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2477396758138466636
 SpriteRenderer:
@@ -162,7 +162,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentState: 0
-  m_Mokename: 
-  m_mokeponInfo: {fileID: 11400000, guid: 07b8c957171f4094e9d8464ebf25af38, type: 2}
-  m_Hp: 0
+  m_Mokename: Snoreza
+  m_mokeponInfo: {fileID: 11400000, guid: a6089beb130517345a2ad5eae4379bb9, type: 2}
+  m_Hp: 50
   m_Type: 0
+  m_experiencia: 1
+  m_level: 0

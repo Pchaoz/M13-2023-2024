@@ -101,6 +101,7 @@ public class Mokepon : MonoBehaviour
 
     public void LoadInfo(MokeponInfo info)
     {
+        Debug.Log("Mis valores antes de cargar son: mi nomebre de pokemon es "+ m_Mokename );
         m_AttacksList = new List<Attack>();
         m_Mokename = info.mokename;
         m_MaxHp = info.hp;
@@ -114,7 +115,40 @@ public class Mokepon : MonoBehaviour
         }
 
         m_Hp = m_MaxHp;
+        Debug.Log("Mis valores despues de cargar son: mi nomebre de pokemon es " + m_Mokename);
+
     }
+
+    public List<int> guardarValores()
+    {
+        List<int> valores = new List<int>();
+        valores.Add(m_mokeponInfo.id);
+        valores.Add(m_MaxHp);
+        valores.Add(m_Hp); 
+        valores.Add(m_experiencia);
+        return valores;
+    }
+
+    public void cargarValoresGuardados(List<int>l) {
+
+        Debug.Log("Mis valores antes de cargar son: ");
+        Debug.Log("Mi vida màxima es:  "+m_MaxHp);
+        Debug.Log("Mi vida actual es:  " + m_Hp);
+        Debug.Log("Mi experiencia actual es:  " + m_experiencia);
+
+
+        m_MaxHp = l[0];
+        m_Hp = l[1];
+        m_experiencia = l[2];
+
+        Debug.Log("Mis valores despues de cargar son: ");
+        Debug.Log("Mi vida màxima es:  " + m_MaxHp);
+        Debug.Log("Mi vida actual es:  " + m_Hp);
+        Debug.Log("Mi experiencia actual es:  " + m_experiencia);
+
+
+    }
+
 
     public void ReciveAttack(Attack atk)
     {

@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "MokeponInfo", menuName = "Scriptables/MokeponInfo")]
 public class MokeponInfo : ScriptableObject
 {
+    public int id;
     public string mokename;
     public int hp;
     public List<AttackInfo> attackList;

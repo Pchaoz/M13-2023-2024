@@ -33,7 +33,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &2477396758138466636
 SpriteRenderer:
@@ -162,7 +162,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CurrentState: 0
-  m_Mokename: 
-  m_mokeponInfo: {fileID: 11400000, guid: 04dd89e65617b6a4f88790202d3527bc, type: 2}
-  m_Hp: 100
+  m_Mokename: Charmandero
+  m_mokeponInfo: {fileID: 11400000, guid: 9e38c3118870b544b92fab80ab924980, type: 2}
+  m_Hp: 4
   m_Type: 1
+  m_experiencia: 5
+  m_level: 0
