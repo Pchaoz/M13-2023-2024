@@ -7,7 +7,7 @@ public class CombatStateMachine : MonoBehaviour
     //STATE MACHINE STUFF
 
     //STATES
-    private enum States { NONE, IDLE, PLAYER1, PLAYER2, IA, WIN };
+    private enum States { NONE, IDLE, PLAYER1, PLAYER2, IA };
     [SerializeField]
     private States m_CurrentState;
 
@@ -132,9 +132,6 @@ public class CombatStateMachine : MonoBehaviour
                 }
                 Debug.Log("NO ATACO A ESTE ATAQUE NO LE QUEDAN PP (IA)");
                 break;
-
-            case States.WIN:
-                break;
         }
     }
     private void InitState(States currentState)
@@ -153,9 +150,6 @@ public class CombatStateMachine : MonoBehaviour
             case States.IA:
                 IsPlayerTurn.Raise(false); //PREVENTS THE PLAYER FROM DOING ACTIONS
                 break;
-            case States.WIN:
-                IsPlayerTurn.Raise(false);
-                break;
         }
     }
     private void ExitState()
@@ -169,8 +163,6 @@ public class CombatStateMachine : MonoBehaviour
             case States.PLAYER2:
                 break;
             case States.IA:
-                break;
-            case States.WIN:
                 break;
         }
     }
@@ -253,7 +245,29 @@ public class CombatStateMachine : MonoBehaviour
         else if (trainer.Equals("J2"))
             IsJ2Alive = false;
         else if (trainer.Equals("IA"))
+        {
             IsIaAlive = false;
+            FinishGame("Players");
+        }
+
+        if (!IsJ1Alive && !IsJ2Alive)
+        {
+            FinishGame("IA");
+        }    
+    }
+
+    private void FinishGame(string winner)
+    {
+        if(winner.Equals("Players"))
+        {
+            Debug.Log("HA GUANYAT " + winner);
+            //SE HACE LO NECESARIO PARA AVISAR DE QUE ACABA EL GAME 
+            ChangeState(States.IDLE);
+        }
+        else
+        {
+            Debug.Log("HA GUANYAT " + winner);
+        }
     }
 
     public void OnSelectedAction(int opt)

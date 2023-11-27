@@ -159,10 +159,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36bc45233a8c0dc4daabd5abe13c7cc1, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_CurrentState: 0
-  m_Mokename:
+  m_Trainer: 
+  m_Mokename: 
   m_Hp: 0
   m_Type: 0
+  m_StateTurns: 0
   OnHpChange: {fileID: 11400000, guid: 19fb1c7a313d22d478a566da9187f4dd, type: 2}
+  OnDefeated: {fileID: 11400000, guid: 65b9688c7cab6c045a76d03aae46a993, type: 2}
+  m_experiencia: 0
+  m_level: 0
